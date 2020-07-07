@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mainDarkGreen">#0B4C5C</color>
+    <color name="mainBlue">#5158BB</color>
+    <color name="mainPink">#EB4B98</color>
+    <color name="mainHintColor">#7E7E7E</color>
+</resources>
