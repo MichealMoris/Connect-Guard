@@ -27,7 +27,16 @@
     <string name="cancel">Cancel</string>
     <string name="totalPrice">100 L.E</string>
     <string name="price">Total Price:</string>
+<<<<<<< Updated upstream
     <string name="sign_out">Sign Out</string>
+=======
+    <string name="productDetails">Car Screen Protector</string>
+    <string name="CategoryOfProduct">Screen Protectors</string>
+    <string name="ProductName">Car Screen Protector From Huwawi</string>
+    <string name="ProductDetails">My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="ProductPrice">100 L.E</string>
+>>>>>>> Stashed changes
     <string-array name="language_spinner">
         <item>English</item>
         <item>العربية</item>
