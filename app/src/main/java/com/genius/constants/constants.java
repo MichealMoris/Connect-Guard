@@ -58,10 +58,7 @@ public class constants
         }else
         {
 
-            from
-                    .requireActivity()
-                    .getSupportFragmentManager()
-                    .popBackStack();
+
             from
                     .requireActivity()
                     .getSupportFragmentManager()

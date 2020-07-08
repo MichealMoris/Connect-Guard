@@ -125,8 +125,8 @@ public class SignUpFragment extends Fragment {
 
                 registerFireBase(name, email, password, mobile, adress);
 
-                setFragment(new SignInFragment());
-                constants.dissmisProgress();
+              /*  setFragment(new SignInFragment());
+                constants.dissmisProgress();*/
 
 
 
@@ -199,7 +199,7 @@ public class SignUpFragment extends Fragment {
                 constants.dissmisProgress();
                 if (task.isSuccessful())
                 {
-                   constants.replaceFragment(SignUpFragment.this,new HomeFragment(),false);
+                   constants.replaceFragment(SignUpFragment.this,new SignInFragment(),false);
                 }
             }
         });
