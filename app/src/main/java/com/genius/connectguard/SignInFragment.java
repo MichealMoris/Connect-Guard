@@ -10,11 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class SignInFragment extends Fragment {
 
     TextView createNewAccount;
+    Button loginButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +31,14 @@ public class SignInFragment extends Fragment {
 
                 setFragemnt(new SignUpFragment());
 
+            }
+        });
+
+        loginButton = view.findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragemnt(new HomeFragment());
             }
         });
 
