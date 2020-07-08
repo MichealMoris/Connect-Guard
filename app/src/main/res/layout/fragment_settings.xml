@@ -96,7 +96,7 @@
             android:background="#0B4C5C" />
 
         <Button
-            android:id="@+id/btn_signOut"
+            android:id="@+id/logOut_btn"
             android:layout_width="180dp"
             android:layout_height="55dp"
             android:layout_gravity="center"
