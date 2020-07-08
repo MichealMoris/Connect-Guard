@@ -36,6 +36,12 @@
     <string name="add_to_cart">Add To Cart</string>
     <string name="ProductPrice">100 L.E</string>
     <string name="done">Done</string>
+    <string name="enter_your_email_to_forget_your_password">Enter Your Email To Forget Your Password:</string>
+    <string name="we_will_send_you_confirmation_email_to_forget_your_password">We Will Send You Confirmation Email To Forget Your Password</string>
+    <string name="send_confirmation_email">Send Confirmation Email</string>
+    <string name="email_sent_successfully">Email Sent Successfully!</string>
+    <string name="confirmation_email_sent_to_your_account_successfuly">Confirmation Email Sent To Your Account Successfuly.</string>
+    <string name="resend_email">Resend Email</string>
     >>>>>>> Stashed changes
     <string-array name="language_spinner">
         <item>English</item>
