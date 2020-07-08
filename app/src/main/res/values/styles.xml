@@ -7,4 +7,9 @@
         <item name="colorAccent">@color/mainPink</item>
     </style>
 
+    <style name="ThemeSpinner">
+        <!-- Default color for the dropdown arrow and line -->
+        <item name="colorControlNormal">#0B4C5C</item>
+    </style>
+
 </resources>
