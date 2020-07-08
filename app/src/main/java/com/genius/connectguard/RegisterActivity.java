@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import com.genius.constants.constants;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;
@@ -16,7 +18,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        setFragment(new SignInFragment());
+        constants.initFireBase();
+
+        if (!constants.getUId(this).equals("empty"))
+        {
+            setFragment(new HomeFragment());
+
+        }else
+        {
+            setFragment(new SignInFragment());
+        }
 
     }
 

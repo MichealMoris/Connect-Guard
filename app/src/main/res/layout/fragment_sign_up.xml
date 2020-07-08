@@ -18,30 +18,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:background="@drawable/shaded_image_circle" />
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/pick_user_image"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:background="@drawable/border_image_circle" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/add_photo_icon" />
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_baseline_camera_24" />
         </FrameLayout>
 
         <EditText
-            android:id="@+id/userRegisterFullName"
+            android:id="@+id/register_name_field"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="20dp"
@@ -53,7 +41,7 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/userRegisterEmail"
+            android:id="@+id/register_email_field"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -65,7 +53,7 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/userRegisterPassword"
+            android:id="@+id/register_password_field"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -77,7 +65,7 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/userRegisterAddress"
+            android:id="@+id/register_adress_field"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -89,7 +77,7 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/userRegisterPhoneNumber"
+            android:id="@+id/register_mobile_field"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -101,7 +89,7 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/userRegisterCarModel"
+            android:id="@+id/register_model_field"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -144,7 +132,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/signUpButton"
+            android:id="@+id/register_register_btn"
             android:layout_width="261dp"
             android:layout_height="46dp"
             android:layout_marginTop="15dp"
@@ -152,12 +140,6 @@
             android:text="@string/sign_up"
             android:textColor="#FFF" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

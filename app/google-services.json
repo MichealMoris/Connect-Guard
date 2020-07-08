@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "694064457525",
+    "firebase_url": "https://connectgruad2.firebaseio.com",
+    "project_id": "connectgruad2",
+    "storage_bucket": "connectgruad2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694064457525:android:237b326ffdcb60fdd40e7c",
+        "android_client_info": {
+          "package_name": "com.genius.connectguard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694064457525-4k0kspo2a7cl6j44d6807sq56ksqgri5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh9AMyxEjbJ1B2sZeAj3hHBd3SUYzuH_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694064457525-4k0kspo2a7cl6j44d6807sq56ksqgri5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
