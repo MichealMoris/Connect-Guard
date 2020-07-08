@@ -22,7 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!constants.getUId(this).equals("empty"))
         {
-            startFragment(new HomeFragment());
+            startFragment(new MainFragment());
 
         }else
         {
