@@ -22,21 +22,22 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!constants.getUId(this).equals("empty"))
         {
-            startFragment(new HomeFragment());
-        } else
+            setFragment(new HomeFragment());
+
+        }else
         {
-            startFragment(new SignInFragment());
+            setFragment(new SignInFragment());
         }
 
     }
 
     //This Method Is To Toggle Between SignUp, SignIn And Home Fragments
-    private void startFragment(Fragment fragment)
-    {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.register_framelayout,fragment)
-                .disallowAddToBackStack()
-                .commit();
+    private void setFragment(Fragment fragment) {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
+        fragmentTransaction.replace(R.id.register_framelayout, fragment);
+        fragmentTransaction.commit();
+
     }
 }

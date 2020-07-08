@@ -4,28 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF"
     tools:context=".AccountSettingFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/ib_back_in_account_setting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/mainDarkGreen">
-
-        <ImageButton
-            android:id="@+id/ib_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:text="@string/account_settings"
-            android:textColor="#fff"
-            android:textSize="22sp" />
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/ic_back_green" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -140,7 +128,7 @@
             android:textColorHint="@color/mainHintColor" />
 
         <Button
-            android:id="@+id/signUpButton2"
+            android:id="@+id/done_button_in_account_setting"
             android:layout_width="261dp"
             android:layout_height="46dp"
             android:layout_marginTop="15dp"
