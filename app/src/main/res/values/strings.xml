@@ -27,6 +27,7 @@
     <string name="cancel">Cancel</string>
     <string name="totalPrice">100 L.E</string>
     <string name="price">Total Price:</string>
+    <string name="sign_out">Sign Out</string>
     <string-array name="language_spinner">
         <item>English</item>
         <item>العربية</item>
