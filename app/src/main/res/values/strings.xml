@@ -36,7 +36,8 @@
     <string name="ProductDetails">My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="ProductPrice">100 L.E</string>
->>>>>>> Stashed changes
+    <string name="done">Done</string>
+    >>>>>>> Stashed changes
     <string-array name="language_spinner">
         <item>English</item>
         <item>العربية</item>

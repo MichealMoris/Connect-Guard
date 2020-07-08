@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountSettingFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainDarkGreen">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/account_settings"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/edit_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_image_circle" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image2"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile" />
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shaded_image_circle" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/edit_icon" />
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/change_user_name"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/full_name"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/mainHintColor" />
+
+        <EditText
+            android:id="@+id/change_user_email"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/e_mail"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/mainHintColor" />
+
+        <EditText
+            android:id="@+id/change_user_"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/mainHintColor" />
+
+        <EditText
+            android:id="@+id/change_user_address"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/address"
+            android:inputType="text"
+            android:textColorHint="@color/mainHintColor" />
+
+        <EditText
+            android:id="@+id/change_user_phone_number"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:textColorHint="@color/mainHintColor" />
+
+        <EditText
+            android:id="@+id/change_user_car_model"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/car_model"
+            android:inputType="text"
+            android:textColorHint="@color/mainHintColor" />
+
+        <Button
+            android:id="@+id/signUpButton2"
+            android:layout_width="261dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_background"
+            android:text="@string/done"
+            android:textColor="#FFF" />
+
+    </LinearLayout>
+</FrameLayout>
