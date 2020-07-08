@@ -112,7 +112,7 @@ public class SignInFragment extends Fragment {
                         {
                             constants.saveUId(requireActivity(),task.getResult().getUser().getUid());
 
-                            setFragemnt(new HomeFragment());
+                            setFragemnt(new MainFragment());
                         }else
                         {
                             constants.showToast(requireContext(), task.getException().getMessage());

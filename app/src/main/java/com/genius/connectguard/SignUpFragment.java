@@ -125,7 +125,7 @@ public class SignUpFragment extends Fragment {
 
                 registerFireBase(name, email, password, mobile, adress);
 
-                setFragment(new SignInFragment());
+                setFragment(new HomeFragment());
                 constants.dissmisProgress();
 
 
@@ -192,14 +192,15 @@ public class SignUpFragment extends Fragment {
     {
         userModel userModel = new userModel(name , email , mobile , adress , imageUrl , uId);
 
-        constants.getDatabaseReference().child("Users").child(uId).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+        constants.getDatabaseReference().child("users").child(uId).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task)
             {
                 constants.dissmisProgress();
                 if (task.isSuccessful())
                 {
-                   constants.replaceFragment(SignUpFragment.this,new HomeFragment(),false);
+                    setFragment(new SignInFragment());
+
                 }
             }
         });

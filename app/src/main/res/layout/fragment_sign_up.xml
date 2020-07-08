@@ -25,7 +25,8 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_baseline_camera_24" />
+                android:src="@drawable/camera_icon" />
+
         </FrameLayout>
 
         <EditText
