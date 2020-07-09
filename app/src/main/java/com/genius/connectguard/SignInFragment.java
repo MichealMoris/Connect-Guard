@@ -23,6 +23,7 @@ public class SignInFragment extends Fragment {
 
     //
     TextView createNewAccount;
+    TextView forget_password;
     private View view ;
     private Button loginBtn ;
     private EditText emailField ;
@@ -41,6 +42,16 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
 
                 setFragemnt(new SignUpFragment());
+
+            }
+        });
+
+        forget_password = view.findViewById(R.id.forgetPasswordText);
+        forget_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setFragemnt(new ForgetPasswordFragment());
 
             }
         });
