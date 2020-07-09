@@ -61,4 +61,6 @@
     <string name="et_product_price_hint">Enter Price</string>
     <string name="button_product_submit">Submit</string>
     <string name="admin_panel">Admin Panel</string>
+    <string name="cart">Cart</string>
+    <string name="checkout">CheckOut</string>
 </resources>
