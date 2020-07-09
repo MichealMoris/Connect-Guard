@@ -110,8 +110,11 @@ public class SignUpFragment extends Fragment {
                 String mobile = mobileField.getText().toString();
                 String adress = adressField.getText().toString();
 
+
                 if (name.isEmpty() || email.isEmpty() || password.isEmpty() || mobile.isEmpty() || adress.isEmpty()) {
+
                     constants.showToast(requireContext(), "invalid data");
+
                     return;
                 }
 
@@ -119,6 +122,8 @@ public class SignUpFragment extends Fragment {
                 if (userImage == null)
                 {
                     constants.showToast(requireContext(),"please select image");
+                    return;
+
                 }
 
                 constants.showProgress();
