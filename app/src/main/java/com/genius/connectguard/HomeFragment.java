@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -14,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.genius.models.productModel;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -106,7 +109,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull vh holder, int position)
+        public void onBindViewHolder(@NonNull final vh holder, final int position)
         {
             productModel model = postModelList.get(position);
 
@@ -126,6 +129,31 @@ public class HomeFragment extends Fragment {
                         .load(image)
                         .into(holder.postImage);
 
+                holder.post_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                for (DataSnapshot child : snapshot.getChildren()){
+
+                                    Toast.makeText(holder.itemView.getContext(), child.getKey(), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+                });
+
 
 
         }
@@ -141,6 +169,7 @@ public class HomeFragment extends Fragment {
             ImageView postImage ;
             TextView postText ;
             TextView postDescriptiom ;
+            CardView post_container;
 
 
             public vh(@NonNull View itemView)
@@ -150,6 +179,7 @@ public class HomeFragment extends Fragment {
                 postImage = itemView.findViewById(R.id.post_image);
                 postText = itemView.findViewById(R.id.post_text);
                 postDescriptiom = itemView.findViewById(R.id.post_description);
+                post_container = itemView.findViewById(R.id.post_container);
 
 
 

@@ -10,6 +10,7 @@ import com.genius.connectguard.R;
 import com.genius.models.productModel;
 import com.genius.models.userModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -19,7 +20,6 @@ import androidx.fragment.app.Fragment;
 
 public class constants
 {
-
 
     public static userModel myProducts ;
     public static productModel productModel ;
@@ -143,6 +143,21 @@ public class constants
     public static String getUId (Activity activity)
     {
         sharedPreferences = activity.getSharedPreferences("gruad2",Context.MODE_PRIVATE);
+        return sharedPreferences.getString("uId","empty");
+    }
+
+    public static void saveProductId(Activity activity,String id)
+    {
+        sharedPreferences = activity.getSharedPreferences("gruad3",Context.MODE_PRIVATE);
+
+        editor = sharedPreferences.edit();
+        editor.putString("uId",id);
+        editor.apply();
+    }
+
+    public static String getProductId (Activity activity)
+    {
+        sharedPreferences = activity.getSharedPreferences("gruad3",Context.MODE_PRIVATE);
         return sharedPreferences.getString("uId","empty");
     }
 
