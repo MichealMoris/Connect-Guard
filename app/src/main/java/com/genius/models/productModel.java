@@ -23,7 +23,7 @@ public class productModel
         this.type = type;
     }
 
-    public productModel(String name, String modell, String description, String price, Uri imageUri, int type) {
+    public productModel() {
     }
 
     public String getProductName() {

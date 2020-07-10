@@ -56,7 +56,6 @@ public class AdminAddProduct extends Fragment
 
         constants.initProgress(requireContext(), "please wait");
         initViews();
-
     }
 
 
@@ -109,7 +108,6 @@ public class AdminAddProduct extends Fragment
                 }else
                     {
                         uploadImage(name , model , description , price , selectedPostImage , 1);
-
                     }
 
 
@@ -166,12 +164,13 @@ public class AdminAddProduct extends Fragment
 
                 if (roomId != null)
                 {
+
                     constants.getDatabaseReference().child("products").child(roomId).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task)
                         {
                             constants.dissmisProgress();
-                            constants.replaceFragment(AdminAddProduct.this,new MainFragment() , true);
+                            constants.replaceFragment(AdminAddProduct.this,new HomeFragment(),true);
 
 
                         }
