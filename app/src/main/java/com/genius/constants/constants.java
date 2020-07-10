@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.genius.connectguard.R;
+import com.genius.models.productModel;
+import com.genius.models.userModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,6 +20,9 @@ import androidx.fragment.app.Fragment;
 public class constants
 {
 
+
+    public static userModel myProducts ;
+    public static productModel productModel ;
 
     //progress dialog
     private static ProgressDialog progressDialog ;

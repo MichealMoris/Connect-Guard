@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:background="#eee"
     tools:context=".HomeFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,33 +20,23 @@
             android:layout_height="40dp"
             android:background="@drawable/app_icon" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_marginStart="40dp"
-            app:cardCornerRadius="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
         <SearchView
-            android:queryHint="Search ..."
-            android:background="@android:color/white"
-            android:searchIcon="@drawable/ic_search"
-            android:layout_width="220dp"
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/mainDarkGreen"
-            android:textSize="22sp" />
-        </androidx.cardview.widget.CardView>
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_search"
-            android:layout_marginStart="20dp"
+            android:layout_margin="10dp"
+            android:background="#EEE"
             />
+
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_posts"
+        android:id="@+id/posts_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_post"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+         />
 
 </LinearLayout>

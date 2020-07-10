@@ -1,5 +1,6 @@
 package com.genius.models;
 
+import android.net.Uri;
 import android.widget.EditText;
 
 public class productModel
@@ -9,13 +10,17 @@ public class productModel
     private  String productModel ;
     private  String productDiscreption ;
     private  String productPrice ;
+    private  String productImage ;
+    private  int type ;
 
 
-    public productModel(String productName, String productModel, String productDiscreption, String productPrice) {
+    public productModel(String productName, String productModel, String productDiscreption, String productPrice, String productImage, int type) {
         this.productName = productName;
         this.productModel = productModel;
         this.productDiscreption = productDiscreption;
         this.productPrice = productPrice;
+        this.productImage = productImage;
+        this.type = type;
     }
 
     public productModel() {
@@ -53,5 +58,19 @@ public class productModel
         this.productPrice = productPrice;
     }
 
+    public String getProductImage() {
+        return productImage;
+    }
 
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }
