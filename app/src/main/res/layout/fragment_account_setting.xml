@@ -62,7 +62,19 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/change_user_"
+            android:id="@+id/change_user_password_old_password"
+            android:layout_width="217dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/old_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/mainHintColor" />
+
+        <EditText
+            android:id="@+id/change_user_password_new_password"
             android:layout_width="217dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -109,14 +121,32 @@
             android:inputType="text"
             android:textColorHint="@color/mainHintColor" />
 
-        <Button
-            android:id="@+id/done_button_in_account_setting"
-            android:layout_width="261dp"
-            android:layout_height="46dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:background="@drawable/button_background"
-            android:text="@string/done"
-            android:textColor="#FFF" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/done_button_in_account_setting"
+                android:layout_width="241dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_background"
+                android:text="@string/done"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/cancel_button_in_account_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_background_pink"
+                android:text="@string/cancel" />
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>
