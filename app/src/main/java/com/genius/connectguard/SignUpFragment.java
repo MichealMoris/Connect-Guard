@@ -41,6 +41,7 @@ public class SignUpFragment extends Fragment {
     private EditText passwordField;
     private EditText mobileField;
     private EditText adressField;
+    private EditText carModel;
     private CircleImageView circleImageView;
     private Uri userImage;
     private Button registerBtn;
@@ -89,6 +90,7 @@ public class SignUpFragment extends Fragment {
         passwordField = view.findViewById(R.id.register_password_field);
         mobileField = view.findViewById(R.id.register_mobile_field);
         adressField = view.findViewById(R.id.register_adress_field);
+        carModel = view.findViewById(R.id.register_model_field);
         circleImageView = view.findViewById(R.id.pick_user_image);
         registerBtn = view.findViewById(R.id.register_register_btn);
 
@@ -109,9 +111,10 @@ public class SignUpFragment extends Fragment {
                 String password = passwordField.getText().toString();
                 String mobile = mobileField.getText().toString();
                 String adress = adressField.getText().toString();
+                String model = carModel.getText().toString();
 
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || mobile.isEmpty() || adress.isEmpty()) {
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || mobile.isEmpty() || adress.isEmpty() || model.isEmpty()) {
 
                     constants.showToast(requireContext(), "invalid data");
 
@@ -123,12 +126,11 @@ public class SignUpFragment extends Fragment {
                 {
                     constants.showToast(requireContext(),"please select image");
                     return;
-
                 }
 
                 constants.showProgress();
 
-                registerFireBase(name, email, password, mobile, adress);
+                registerFireBase(name, email, password, mobile, adress , model);
 
              /*   setFragment(new SignInFragment());
                 constants.dissmisProgress();*/
@@ -139,7 +141,7 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    private void registerFireBase(final String name , final String email , String password, final String mobile, final String adress) {
+    private void registerFireBase(final String name , final String email , final String password, final String mobile, final String adress , final String model) {
         constants.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -149,7 +151,7 @@ public class SignUpFragment extends Fragment {
                         {
                             String uId = task.getResult().getUser().getUid();
 
-                            uploadImage(name,email,mobile,adress,uId);
+                            uploadImage(name,email, password,mobile,adress,model , uId);
 
 
                         } else
@@ -162,7 +164,7 @@ public class SignUpFragment extends Fragment {
                 });
     }
 
-    private void uploadImage(final String name, final String email, final String mobile, final String adress, final String uId)
+    private void uploadImage(final String name, final String email,final String password , final String mobile, final String adress,final String model,  final String uId)
     {
         // set file place into storage and file name
         final StorageReference userImageRef = constants.getStorageReference().child("users_images/"+userImage.getLastPathSegment());
@@ -187,15 +189,15 @@ public class SignUpFragment extends Fragment {
                     Uri downloadUri = task.getResult();
                     String imageUrl = downloadUri.toString();
 
-                    saveNewUser(name,email,mobile,adress,uId,imageUrl);
+                    saveNewUser(name,email,password,mobile,adress,model,uId,imageUrl);
                 }
             }
         });
     }
 
-    private void saveNewUser(String name, String email, String mobile, String adress, String uId, String imageUrl)
+    private void saveNewUser(String name, String email, String password , String mobile, String adress,String model, String uId, String imageUrl)
     {
-        userModel userModel = new userModel(name , email , mobile , adress , imageUrl , uId);
+        userModel userModel = new userModel(name , email , password , mobile , adress , model , imageUrl , uId);
 
         constants.getDatabaseReference().child("Users").child(uId).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

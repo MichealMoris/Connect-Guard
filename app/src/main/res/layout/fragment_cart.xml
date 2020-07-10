@@ -10,7 +10,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_cart"
         />
 
     <androidx.cardview.widget.CardView
@@ -43,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text=" 50 L.E"
                 android:textColor="@color/mainDarkGreen"
+                android:layout_marginRight="10dp"
                 />
             <Button
                 android:id="@+id/btn_checkOut"
