@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Home Fragment" />
+        android:layout_height="80dp"
+        android:background="@color/mainDarkGreen">
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/ib_logo"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:background="@drawable/app_icon" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginStart="40dp"
+            app:cardCornerRadius="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <SearchView
+            android:queryHint="Search ..."
+            android:background="@android:color/white"
+            android:searchIcon="@drawable/ic_search"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainDarkGreen"
+            android:textSize="22sp" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_search"
+            android:layout_marginStart="20dp"
+            />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_posts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
