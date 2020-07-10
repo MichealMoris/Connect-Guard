@@ -33,7 +33,6 @@ public class AccountSettingFragment extends Fragment {
     ImageView profile_image_in_account_setting;
     ImageView edit_profile_image_icon_in_account_setting;
     EditText name_in_account_setting;
-    EditText email_in_account_setting;
     EditText password_in_account_setting;
     EditText address_in_account_setting;
     EditText phone_number_in_account_setting;
@@ -58,7 +57,6 @@ public class AccountSettingFragment extends Fragment {
 
         profile_image_in_account_setting = view.findViewById(R.id.profile_image_in_account_setting);
         name_in_account_setting = view.findViewById(R.id.change_user_name);
-        email_in_account_setting = view.findViewById(R.id.change_user_email);
         address_in_account_setting = view.findViewById(R.id.change_user_address);
         phone_number_in_account_setting = view.findViewById(R.id.change_user_phone_number);
 
@@ -68,7 +66,6 @@ public class AccountSettingFragment extends Fragment {
 
                 Picasso.get().load(snapshot.child("userImage").getValue().toString()).into(profile_image_in_account_setting);
                 name_in_account_setting.setText(snapshot.child("name").getValue().toString());
-                email_in_account_setting.setText(snapshot.child("email").getValue().toString());
                 address_in_account_setting.setText(snapshot.child("adress").getValue().toString());
                 phone_number_in_account_setting.setText(snapshot.child("mobile").getValue().toString());
 
@@ -85,7 +82,7 @@ public class AccountSettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                changeData(userImage.toString(),name_in_account_setting.getText().toString(), email_in_account_setting.getText().toString(), address_in_account_setting.getText().toString(), phone_number_in_account_setting.getText().toString());
+                changeData(userImage.toString(),name_in_account_setting.getText().toString(), address_in_account_setting.getText().toString(), phone_number_in_account_setting.getText().toString());
 
             }
         });
@@ -103,7 +100,7 @@ public class AccountSettingFragment extends Fragment {
 
     }
 
-    private void changeData(final String image, final String name, final String email, final String address, final String mobile){
+    private void changeData(final String image, final String name, final String address, final String mobile){
 
         constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,7 +108,6 @@ public class AccountSettingFragment extends Fragment {
 
                 snapshot.getRef().child("userImage").setValue(image);
                 snapshot.getRef().child("name").setValue(name);
-                snapshot.getRef().child("email").setValue(email);
                 snapshot.getRef().child("adress").setValue(address);
                 snapshot.getRef().child("mobile").setValue(mobile);
 

@@ -62,18 +62,6 @@
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
-            android:id="@+id/change_user_email"
-            android:layout_width="217dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_background_pink"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/e_mail"
-            android:inputType="textEmailAddress"
-            android:textColorHint="@color/mainHintColor" />
-
-        <EditText
             android:id="@+id/change_user_"
             android:layout_width="217dp"
             android:layout_height="46dp"
