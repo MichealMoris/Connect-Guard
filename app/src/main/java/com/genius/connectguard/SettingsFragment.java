@@ -5,10 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.constants.constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +24,9 @@ public class SettingsFragment extends Fragment {
 
     TextView accountSettings;
     private View view ;
+    private ImageView profile_image_in_settings;
+    private TextView profile_name_in_settings;
+    private TextView profile_email_in_settings;
     private Button logOutBtn ;
 
 
@@ -35,6 +43,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        setData(view);
+
         return view;
     }
 
@@ -44,6 +54,32 @@ public class SettingsFragment extends Fragment {
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
         fragmentTransaction.replace(R.id.settings_framlayout, fragment);
         fragmentTransaction.commit();
+
+    }
+
+    private void setData(View view){
+
+        profile_image_in_settings = view.findViewById(R.id.profile_image_in_settings);
+        profile_name_in_settings = view.findViewById(R.id.profile_name_in_settings);
+        profile_email_in_settings = view.findViewById(R.id.profile_email_in_settings);
+        constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                String profile_image_uri = snapshot.child("userImage").getValue().toString();
+                String profile_name = snapshot.child("name").getValue().toString();
+                String profile_email = snapshot.child("email").getValue().toString();
+
+                Picasso.get().load(profile_image_uri).into(profile_image_in_settings);
+                profile_name_in_settings.setText(profile_name);
+                profile_email_in_settings.setText(profile_email);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
