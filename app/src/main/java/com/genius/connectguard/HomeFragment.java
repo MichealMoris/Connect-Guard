@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -13,13 +13,13 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.genius.models.productModel;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +35,12 @@ public class HomeFragment extends Fragment {
     private View view ;
 
     private RecyclerView recyclerView ;
+    private SearchView searchView ;
     private List<productModel> postModels;
+
+    String key;
+    postsAdbtar adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -50,7 +55,6 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         initViews();
-
         getPosts();
 
     }
@@ -69,10 +73,16 @@ public class HomeFragment extends Fragment {
                     productModel model = d.getValue(productModel.class);
 
                     postModels.add(model);
+
+                    key = d.getKey();
+
+
                 }
 
-                recyclerView.setAdapter(new postsAdbtar(postModels));
-            //    Objects.requireNonNull(recyclerView.getLayoutManager()).scrollToPosition(postModels.size()-1);
+                adapter = new postsAdbtar(postModels);
+                recyclerView.setAdapter(adapter);
+
+               // recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
             }
 
@@ -89,15 +99,34 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.posts_recycler);
         postModels = new ArrayList<>();
 
+        searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+
     }
 
    public class postsAdbtar extends RecyclerView.Adapter<postsAdbtar.vh>
     {
         List<productModel> postModelList;
+        List<productModel> filteredplannerModels;
+
 
         public postsAdbtar(List<productModel> postModelList)
         {
             this.postModelList = postModelList;
+            this.filteredplannerModels = new ArrayList<>(postModelList);
         }
 
         @NonNull
@@ -109,7 +138,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final vh holder, final int position)
+        public void onBindViewHolder(@NonNull vh holder, int position)
         {
             productModel model = postModelList.get(position);
 
@@ -118,9 +147,15 @@ public class HomeFragment extends Fragment {
                 String text = model.getProductName();
                 String description = model.getProductDiscreption();
                 String image = model.getProductImage();
+                String modell = model.getProductModel();
+                String price = model.getProductPrice();
+
+                //commit
 
 
                 holder.postText.setText(text);
+                holder.postModell.setText(modell);
+                holder.postPrise.setText(price);
                 holder.postDescriptiom.setText(description);
 
 
@@ -128,31 +163,6 @@ public class HomeFragment extends Fragment {
                         .get()
                         .load(image)
                         .into(holder.postImage);
-
-                holder.post_container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                for (DataSnapshot child : snapshot.getChildren()){
-
-                                    Toast.makeText(holder.itemView.getContext(), child.getKey(), Toast.LENGTH_SHORT).show();
-
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                    }
-                });
 
 
 
@@ -163,13 +173,48 @@ public class HomeFragment extends Fragment {
             return postModelList.size();
         }
 
-       public class vh extends RecyclerView.ViewHolder
+        private Filter exampleFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<productModel> filteredList = new ArrayList<>();
+
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(filteredplannerModels);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for (productModel item : filteredplannerModels) {
+                        if (item.getProductName().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                postModelList.clear();
+                postModelList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
+
+        public Filter getFilter() {
+            return exampleFilter;
+        }
+
+
+        public class vh extends RecyclerView.ViewHolder
         {
 
             ImageView postImage ;
             TextView postText ;
+            TextView postModell ;
+            TextView postPrise ;
             TextView postDescriptiom ;
-            CardView post_container;
 
 
             public vh(@NonNull View itemView)
@@ -178,8 +223,9 @@ public class HomeFragment extends Fragment {
 
                 postImage = itemView.findViewById(R.id.post_image);
                 postText = itemView.findViewById(R.id.post_text);
+                postModell = itemView.findViewById(R.id.post_modell);
+                postPrise = itemView.findViewById(R.id.post_price);
                 postDescriptiom = itemView.findViewById(R.id.post_description);
-                post_container = itemView.findViewById(R.id.post_container);
 
 
 
