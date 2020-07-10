@@ -24,7 +24,6 @@
     <string name="order">Order:</string>
     <string name="orderName">Car Screen Protector From Samsung</string>
     <string name="send_order">Send Order</string>
-    <string name="cancel">Cancel</string>
     <string name="totalPrice">100 L.E</string>
     <string name="price">Total Price:</string>
     <string name="sign_out">Sign Out</string>
@@ -63,4 +62,6 @@
     <string name="admin_panel">Admin Panel</string>
     <string name="cart">Cart</string>
     <string name="checkout">CheckOut</string>
+    <string name="old_password">Old Password</string>
+    <string name="cancel">Cancel</string>
 </resources>

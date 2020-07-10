@@ -27,6 +27,8 @@ public class constants
     //progress dialog
     private static ProgressDialog progressDialog ;
 
+    private static int pageNum;
+
     //firebase Auth
     private static FirebaseAuth auth ;
 
