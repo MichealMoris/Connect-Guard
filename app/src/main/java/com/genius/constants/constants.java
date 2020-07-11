@@ -146,25 +146,52 @@ public class constants
         return sharedPreferences.getString("uId","empty");
     }
 
-    public static void saveProductId(Activity activity,String id)
+    public static void saveProductId(Context context,String id)
     {
-        sharedPreferences = activity.getSharedPreferences("gruad3",Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("gruad3",Context.MODE_PRIVATE);
 
         editor = sharedPreferences.edit();
         editor.putString("uId",id);
         editor.apply();
     }
 
-    public static String getProductId (Activity activity)
+    public static String getProductId (Context context)
     {
-        sharedPreferences = activity.getSharedPreferences("gruad3",Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("gruad3",Context.MODE_PRIVATE);
         return sharedPreferences.getString("uId","empty");
     }
 
+    public static void saveProductAmount(Context context, String productName, int id)
+    {
+        sharedPreferences = context.getSharedPreferences("gruad4",Context.MODE_PRIVATE);
+
+        editor = sharedPreferences.edit();
+        editor.putInt(productName,id);
+        editor.apply();
+    }
+
+    public static int getProductAmount (Context context, String productName)
+    {
+        sharedPreferences = context.getSharedPreferences("gruad4",Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(productName,0);
+    }
+
+    public static void saveProductName(Context context, String productName)
+    {
+        sharedPreferences = context.getSharedPreferences("gruad5",Context.MODE_PRIVATE);
+
+        editor = sharedPreferences.edit();
+        editor.putString("productName", productName);
+        editor.apply();
+    }
+
+    public static String getProductName (Context context)
+    {
+        sharedPreferences = context.getSharedPreferences("gruad5",Context.MODE_PRIVATE);
+        return sharedPreferences.getString("productName","empty");
+    }
     public static long getTime()
     {
         return System.currentTimeMillis();
     }
-
-
 }

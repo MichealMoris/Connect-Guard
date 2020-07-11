@@ -79,7 +79,7 @@
         android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card"
+        android:id="@+id/add_to_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
@@ -93,7 +93,7 @@
         android:id="@+id/post_likes_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to Card"
+        android:text="@string/add_to_card"
         android:layout_margin="7dp"
         android:textColor="#fff"
         android:textStyle="bold"

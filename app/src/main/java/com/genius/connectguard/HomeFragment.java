@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -17,6 +19,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.genius.models.productModel;
@@ -140,7 +143,7 @@ public class HomeFragment extends Fragment {
 
         //commit
         @Override
-        public void onBindViewHolder(@NonNull vh holder, int position)
+        public void onBindViewHolder(@NonNull final vh holder, final int position)
         {
             productModel model = postModelList.get(position);
 
@@ -166,7 +169,72 @@ public class HomeFragment extends Fragment {
                         .load(image)
                         .into(holder.postImage);
 
+                holder.add_to_cart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+
+                        constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                for (DataSnapshot child : snapshot.getChildren()){
+
+                                    if (snapshot.child(child.getKey()).child("productName").getValue().toString().equals(postModelList.get(position).getProductName())){
+
+                                        constants.saveProductId(holder.itemView.getContext(), child.getKey());
+                                        new CartFragment().addToCart(holder.itemView);
+
+
+                                    }
+
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        /*constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+
+                                *//*for (DataSnapshot child : snapshot.getChildren()){
+
+                                    constants.saveProductId(holder.itemView.getContext(), child.getKey());
+                                    Toast.makeText(holder.itemView.getContext(), constants.getProductId(holder.itemView.getContext()), Toast.LENGTH_SHORT).show();
+                                    *//**//*setFragemnt(new CartFragment());*//**//*
+
+
+                                }*//*
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+*/
+                    }
+                });
+
+
+
+        }
+
+        private void setFragemnt(Fragment fragment) {
+
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
+            fragmentTransaction.replace(R.id.home_framlayout, fragment);
+            fragmentTransaction.commit();
 
         }
 
@@ -218,6 +286,7 @@ public class HomeFragment extends Fragment {
             TextView postModell ;
             TextView postPrise ;
             TextView postDescriptiom ;
+            CardView add_to_cart;
 
 
             public vh(@NonNull View itemView)
@@ -231,6 +300,7 @@ public class HomeFragment extends Fragment {
                 postPrise = itemView.findViewById(R.id.post_price);
                 postDescriptiom = itemView.findViewById(R.id.post_description);
 
+                add_to_cart = itemView.findViewById(R.id.add_to_cart);
 
 
             }

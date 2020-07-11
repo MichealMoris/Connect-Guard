@@ -64,4 +64,5 @@
     <string name="checkout">CheckOut</string>
     <string name="old_password">Old Password</string>
     <string name="cancel">Cancel</string>
+    <string name="add_to_card">Add to Card</string>
 </resources>
