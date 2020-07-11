@@ -117,6 +117,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    //commit
    public class postsAdbtar extends RecyclerView.Adapter<postsAdbtar.vh>
     {
         List<productModel> postModelList;
@@ -137,6 +138,7 @@ public class HomeFragment extends Fragment {
             return new vh(view);
         }
 
+        //commit
         @Override
         public void onBindViewHolder(@NonNull vh holder, int position)
         {
@@ -172,6 +174,7 @@ public class HomeFragment extends Fragment {
         public int getItemCount() {
             return postModelList.size();
         }
+        //commit
 
         private Filter exampleFilter = new Filter() {
             @Override
@@ -206,7 +209,7 @@ public class HomeFragment extends Fragment {
             return exampleFilter;
         }
 
-
+//commit
         public class vh extends RecyclerView.ViewHolder
         {
 
