@@ -33,14 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment
+{
 
     private View view ;
 
     private RecyclerView recyclerView ;
     private SearchView searchView ;
     private List<productModel> postModels;
-
     String key;
     postsAdbtar adapter;
 
@@ -296,7 +296,6 @@ public class HomeFragment extends Fragment {
                 postImage = itemView.findViewById(R.id.post_image);
                 postText = itemView.findViewById(R.id.post_text);
                 postModell = itemView.findViewById(R.id.post_modell);
-
                 postPrise = itemView.findViewById(R.id.post_price);
                 postDescriptiom = itemView.findViewById(R.id.post_description);
 
