@@ -195,6 +195,7 @@ public class CartFragment extends Fragment {
                     constants.getDatabaseReference().child("Cart").child(constants.getProductId(view.getContext())).setValue(new CartModel(snapshot.child("productImage").getValue().toString(), snapshot.child("productName").getValue().toString(), snapshot.child("productModel").getValue().toString(), 10));
                     Toast.makeText(view.getContext(), snapshot.child("productName").getValue().toString()+" Added To Cart", Toast.LENGTH_SHORT).show();
 
+
                 }
 
                 @Override
