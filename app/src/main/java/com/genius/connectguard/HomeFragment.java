@@ -227,6 +227,7 @@ public class HomeFragment extends Fragment {
                 postImage = itemView.findViewById(R.id.post_image);
                 postText = itemView.findViewById(R.id.post_text);
                 postModell = itemView.findViewById(R.id.post_modell);
+
                 postPrise = itemView.findViewById(R.id.post_price);
                 postDescriptiom = itemView.findViewById(R.id.post_description);
 
