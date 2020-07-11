@@ -29,7 +29,7 @@ public class AdminFragment extends Fragment {
                 switch (id){
                     case R.id.bt_add:
 
-                        setFragemnt(new AdminAddProduct());
+                        setFragemnt(new adminPaswword());
                         break;
 
                     case R.id.bt_request:
@@ -54,5 +54,7 @@ public class AdminFragment extends Fragment {
         fragmentTransaction.commit();
 
     }
+
+
 
 }

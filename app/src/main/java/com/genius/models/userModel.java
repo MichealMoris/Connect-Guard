@@ -22,7 +22,9 @@ public class userModel
         this.uId = uId;
     }
 
-    public userModel() {
+    public userModel()
+    {
+
     }
 
 

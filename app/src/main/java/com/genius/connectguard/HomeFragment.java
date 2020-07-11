@@ -30,14 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment
+{
 
     private View view ;
 
     private RecyclerView recyclerView ;
     private SearchView searchView ;
     private List<productModel> postModels;
-
     String key;
     postsAdbtar adapter;
 

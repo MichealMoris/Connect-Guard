@@ -24,6 +24,8 @@
             android:text="@string/admin_panel"
             android:textColor="#fff"
             android:textSize="22sp" />
+
+
     </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,7 +51,14 @@
                 android:text="@string/tv_add_product"
                 style="@style/AdminMainText"/>
 
+
+
         </RelativeLayout>
+
+
+
+
+
 
         <RelativeLayout
             android:layout_marginRight="10dp"
