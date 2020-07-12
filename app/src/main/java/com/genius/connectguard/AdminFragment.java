@@ -8,18 +8,27 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import com.genius.constants.constants;
 
 public class AdminFragment extends Fragment {
 
     RelativeLayout addProduct , request;
+    FrameLayout adminVisablty;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_admin, container, false);
 
+
+
         request = (RelativeLayout)rootView.findViewById(R.id.bt_request);
         addProduct = (RelativeLayout)rootView.findViewById(R.id.bt_add);
+        adminVisablty = (FrameLayout)rootView.findViewById(R.id.admin_visable);
+
+
 
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override

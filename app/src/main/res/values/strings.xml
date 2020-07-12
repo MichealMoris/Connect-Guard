@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Connect Guard</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -31,7 +31,7 @@
     <string name="productDetails">Car Screen Protector</string>
     <string name="CategoryOfProduct">Screen Protectors</string>
     <string name="ProductName">Car Screen Protector From Huwawi</string>
-    <string name="ProductDetails">My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed</string>
+    <string name="ProductDetails" translatable="false">My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed My name is mohamed</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="ProductPrice">100 L.E</string>
     <string name="done">Done</string>
@@ -39,9 +39,9 @@
     <string name="we_will_send_you_confirmation_email_to_forget_your_password">We Will Send You Confirmation Email To Forget Your Password</string>
     <string name="send_confirmation_email">Send Confirmation Email</string>
     <string name="email_sent_successfully">Email Sent Successfully!</string>
-    <string name="confirmation_email_sent_to_your_account_successfuly">Confirmation Email Sent To Your Account Successfuly.</string>
-    <string name="resend_email">Resend Email</string>
-    <string name="et_product_name_hint">Enter Name</string>
+    <string name="confirmation_email_sent_to_your_account_successfuly" translatable="false">Confirmation Email Sent To Your Account Successfuly.</string>
+    <string name="resend_email" translatable="false">Resend Email</string>
+    <string name="et_product_name_hint" translatable="false">Enter Name</string>
 
     >>>>>>> Stashed changes
     <string-array name="language_spinner">
@@ -50,19 +50,19 @@
     </string-array>
 
     <!-- Admin Main  -->
-    <string name="tv_add_product">Add New</string>
-    <string name="tv_request">Send Request</string>
+    <string name="tv_add_product" translatable="false">Add New</string>
+    <string name="tv_request" translatable="false">Send Request</string>
 
 
     <!-- Admin Add Product  -->
-    <string name="et_product_model_hint">Enter Model</string>
-    <string name="et_product_description_hint">Enter Description</string>
-    <string name="et_product_price_hint">Enter Price</string>
-    <string name="button_product_submit">Submit</string>
-    <string name="admin_panel">Admin Panel</string>
-    <string name="cart">Cart</string>
-    <string name="checkout">CheckOut</string>
-    <string name="old_password">Old Password</string>
-    <string name="cancel">Cancel</string>
-    <string name="add_to_card">Add to Card</string>
+    <string name="et_product_model_hint" translatable="false">Enter Model</string>
+    <string name="et_product_description_hint" translatable="false">Enter Description</string>
+    <string name="et_product_price_hint" translatable="false">Enter Price</string>
+    <string name="button_product_submit" translatable="false">Submit</string>
+    <string name="admin_panel" translatable="false">Admin Panel</string>
+    <string name="cart" translatable="false">Cart</string>
+    <string name="checkout" translatable="false">CheckOut</string>
+    <string name="old_password" translatable="false">Old Password</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="add_to_card" translatable="false">Add to Card</string>
 </resources>

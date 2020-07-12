@@ -43,6 +43,7 @@ public class SignUpFragment extends Fragment {
     private EditText mobileField;
     private EditText adressField;
     private EditText carModel;
+    private Spinner userRegisterChooseLang;
     private CircleImageView circleImageView;
     private Spinner userRegisterChooseLang;
     private Uri userImage;
@@ -84,6 +85,7 @@ public class SignUpFragment extends Fragment {
 
         initViews();
         constants.initProgress(requireContext(), "please wait ...");
+
     }
 
     private void initViews() {

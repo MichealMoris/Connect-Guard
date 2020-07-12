@@ -5,13 +5,26 @@ public class CartModel {
     String product_image;
     String product_name;
     String product_catgory;
+    private static String uId ;
     int product_amount;
 
-    public CartModel(String product_image, String product_name, String product_catgory, int product_amount) {
+    public CartModel(String product_image, String product_name, String product_catgory, String uId, int product_amount) {
         this.product_image = product_image;
         this.product_name = product_name;
         this.product_catgory = product_catgory;
+        this.uId = uId;
         this.product_amount = product_amount;
+    }
+
+    public CartModel() {
+    }
+
+    public static String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 
     public String getProduct_image() {

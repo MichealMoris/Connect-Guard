@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Connect Guard</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="password">الرقم السري</string>
+    <string name="login">دخول</string>
+    <string name="signup_with">سجل</string>
+    <string name="create_new_account">انشاء حساب جديد؟</string>
+    <string name="forget_password">هل نسيت كلمة المرور؟</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="e_mail">البريد الالكتروني</string>
+    <string name="address">عنوان</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="car_model">طراز السيارة</string>
+    <string name="language">لغة</string>
+    <string name="sign_up">سجل</string>
+    <string name="already_have_account">"هل لديك حساب بالفعل؟ "</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="settings">الإعدادات</string>
+    <string name="userName">"محمد هاني "</string>
+    <string name="account_settings">إعدادت الحساب</string>
+    <string name="requests">الطلبات</string>
+    <string name="carType">"لانسر بوما "</string>
+    <string name="order">طلب</string>
+    <string name="orderName">"حامي شاشة السيارة من سامسونج "</string>
+    <string name="send_order">ارسال الطلب</string>
+    <string name="totalPrice">"100 جنيه "</string>
+    <string name="price">السعر الكلي:</string>
+    <string name="sign_out">خروج</string>
+    <string name="productDetails">"حامي شاشة السيارة "</string>
+    <string name="CategoryOfProduct">واقيات الشاشة</string>
+    <string name="ProductName">"حامي شاشة السيارة من هواوي "</string>
+    <string name="add_to_cart">أضف إلى السلة</string>
+    <string name="ProductPrice">100 L.E</string>
+    <string name="done">منجز</string>
+    <string name="enter_your_email_to_forget_your_password">"أدخل بريدك الإلكتروني نسيت كلمة مرورك: "</string>
+    <string name="we_will_send_you_confirmation_email_to_forget_your_password">"سنرسل لك رسالة تأكيد بالبريد الإلكتروني لتنسى كلمة المرور الخاصة بك "</string>
+    <string name="send_confirmation_email">"إرسال بريد إلكتروني للتأكيد "</string>
+    <string name="email_sent_successfully">"تم إرسال البريد الإلكتروني بنجاح! "</string>
+</resources>
