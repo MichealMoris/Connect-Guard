@@ -10,8 +10,9 @@ public class userModel
     private String carModel ;
     private String userImage ;
     private String uId ;
+    private String language;
 
-    public userModel(String name, String email, String password, String mobile, String adress, String carModel, String userImage, String uId) {
+    public userModel(String name, String email, String password, String mobile, String adress, String carModel, String userImage, String uId, String language) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -20,6 +21,7 @@ public class userModel
         this.carModel = carModel;
         this.userImage = userImage;
         this.uId = uId;
+        this.language = language;
     }
 
     public userModel()
@@ -90,5 +92,13 @@ public class userModel
 
     public void setuId(String uId) {
         this.uId = uId;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

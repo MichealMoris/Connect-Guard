@@ -11,11 +11,14 @@ import com.genius.models.productModel;
 import com.genius.models.userModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class constants
@@ -161,6 +164,33 @@ public class constants
         return sharedPreferences.getString("uId","empty");
     }
 
+    public static String getLanguage(Activity activity){
+
+        final String[] language = new String[1];
+
+        getDatabaseReference().child("Users").child(constants.getUId(activity)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                language[0] = snapshot.child("language").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return language[0];
+    }
+
+    public static void setLanguage(Activity activity,String language){
+
+        getDatabaseReference().child("Users").child(constants.getUId(activity)).child("language").setValue(language);
+
+    }
+
     public static void saveProductAmount(Context context, String productName, int id)
     {
         sharedPreferences = context.getSharedPreferences("gruad4",Context.MODE_PRIVATE);
@@ -194,4 +224,6 @@ public class constants
     {
         return System.currentTimeMillis();
     }
+
+
 }

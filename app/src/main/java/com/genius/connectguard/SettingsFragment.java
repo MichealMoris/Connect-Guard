@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.genius.constants.constants;
@@ -27,6 +28,7 @@ public class SettingsFragment extends Fragment {
     private ImageView profile_image_in_settings;
     private TextView profile_name_in_settings;
     private TextView profile_email_in_settings;
+    private Spinner change_language;
     private Button logOutBtn ;
 
 
@@ -34,6 +36,9 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
           view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+          change_language = view.findViewById(R.id.change_language);
+          constants.setLanguage(getActivity(), change_language.getSelectedItem().toString());
 
         accountSettings = view.findViewById(R.id.tv_accountSettings);
         accountSettings.setOnClickListener(new View.OnClickListener() {

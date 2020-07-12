@@ -57,4 +57,9 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'com.google.android.material:material:1.1.0'
+
+    //Room Database
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }
