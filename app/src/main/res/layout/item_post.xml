@@ -74,33 +74,10 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
-        android:elevation="10sp"
-        app:cardBackgroundColor="#05534C"
-
-        android:layout_margin="5dp"
-        >
-
-    <TextView
-        android:id="@+id/post_likes_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to Card"
-        android:layout_margin="7dp"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:visibility="visible"
-        />
-    </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/post_price"
@@ -108,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="20 L.E"
             android:maxLines="3"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="40dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:textColor="#FA0303"
@@ -117,12 +94,37 @@
 
             />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/add_to_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            android:elevation="10sp"
+            app:cardBackgroundColor="#05534C"
+
+            android:layout_margin="5dp"
+            >
+
+            <TextView
+                android:id="@+id/post_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add to Card"
+                android:layout_margin="7dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:visibility="visible"
+                />
+        </androidx.cardview.widget.CardView>
+
+
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_baseline_shopping_cart_24"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="40dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>

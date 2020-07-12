@@ -217,9 +217,8 @@ public class CartFragment extends Fragment {
                 for (DataSnapshot child : snapshot.getChildren()){
 
 
-                    if (!CartModel.getuId().equals(constants.getUId(requireActivity())))
 
-                        cartList.add(new CartModel(child.child("product_image").getValue().toString(),child.child("key").getValue().toString(), child.child("product_name").getValue().toString(), child.child("product_catgory").getValue().toString(), Integer.parseInt(child.child("product_amount").getValue().toString())));
+                        cartList.add(new CartModel(child.child("product_image").getValue().toString(), child.child("product_name").getValue().toString(), child.child("product_catgory").getValue().toString(), Integer.parseInt(child.child("product_amount").getValue().toString())));
 
                 }
                 cart_recyclerView = view.findViewById(R.id.cart_items);

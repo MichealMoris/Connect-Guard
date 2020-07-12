@@ -16,7 +16,6 @@ import com.genius.constants.constants;
 public class AdminFragment extends Fragment {
 
     RelativeLayout addProduct , request;
-    FrameLayout adminVisablty;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class AdminFragment extends Fragment {
 
         request = (RelativeLayout)rootView.findViewById(R.id.bt_request);
         addProduct = (RelativeLayout)rootView.findViewById(R.id.bt_add);
-        adminVisablty = (FrameLayout)rootView.findViewById(R.id.admin_visable);
 
 
 

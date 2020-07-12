@@ -45,7 +45,6 @@ public class SignUpFragment extends Fragment {
     private EditText carModel;
     private Spinner userRegisterChooseLang;
     private CircleImageView circleImageView;
-    private Spinner userRegisterChooseLang;
     private Uri userImage;
     private Button registerBtn;
 
