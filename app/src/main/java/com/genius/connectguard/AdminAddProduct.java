@@ -174,7 +174,7 @@ public class AdminAddProduct extends Fragment
                         {
                             constants.dissmisProgress();
 
-                            constants.replaceFragment(AdminAddProduct.this,new HomeFragment(),true);
+                            constants.replaceFragment(AdminAddProduct.this,new MainFragment(),true);
 
 
                         }

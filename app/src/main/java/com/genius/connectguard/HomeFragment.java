@@ -184,6 +184,7 @@ public class HomeFragment extends Fragment
 
                                         constants.saveProductId(holder.itemView.getContext(), child.getKey());
                                         new CartFragment().addToCart(holder.itemView);
+                                        constants.replaceFragment(HomeFragment.this,new CartFragment() , true);
 
 
                                     }
