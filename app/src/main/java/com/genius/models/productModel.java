@@ -11,15 +11,17 @@ public class productModel
     private  String productDiscreption ;
     private  String productPrice ;
     private  String productImage ;
+    private String uId ;
     private  int type ;
 
 
-    public productModel(String productName, String productModel, String productDiscreption, String productPrice, String productImage, int type) {
+    public productModel(String productName, String productModel, String productDiscreption, String productPrice, String productImage, String uId, int type) {
         this.productName = productName;
         this.productModel = productModel;
         this.productDiscreption = productDiscreption;
         this.productPrice = productPrice;
         this.productImage = productImage;
+        this.uId = uId;
         this.type = type;
     }
 
@@ -72,5 +74,13 @@ public class productModel
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 }
