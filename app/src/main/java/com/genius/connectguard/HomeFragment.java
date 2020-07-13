@@ -1,5 +1,7 @@
 package com.genius.connectguard;
 
+import android.hardware.camera2.params.RggbChannelVector;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.genius.constants.constants;
+import com.genius.models.CartModel;
 import com.genius.models.productModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -176,15 +179,34 @@ public class HomeFragment extends Fragment
 
                         constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            public void onDataChange(@NonNull final DataSnapshot snapshot) {
 
-                                for (DataSnapshot child : snapshot.getChildren()){
+                                for (final DataSnapshot child : snapshot.getChildren()){
 
                                     if (snapshot.child(child.getKey()).child("productName").getValue().toString().equals(postModelList.get(position).getProductName())){
 
-                                        constants.saveProductId(holder.itemView.getContext(), child.getKey());
-                                        new CartFragment().addToCart(holder.itemView);
+                                        class AddCartOrdersTask extends AsyncTask<Void, Void, Void> {
 
+                                            @Override
+                                            protected Void doInBackground(Void... voids) {
+
+                                                CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase()
+                                                        .cartDao()
+                                                        .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), 1));
+                                                return null;
+                                            }
+
+                                            @Override
+                                            protected void onPostExecute(Void aVoid) {
+                                                super.onPostExecute(aVoid);
+
+                                                Toast.makeText(view.getContext(), snapshot.child(child.getKey()).child("productName").getValue().toString() + " " + view.getResources().getString(R.string.item_added_to_cart), Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+
+                                        AddCartOrdersTask addCartOrdersTask = new AddCartOrdersTask();
+                                        addCartOrdersTask.execute();
 
                                     }
 

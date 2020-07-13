@@ -1,5 +1,6 @@
 package com.genius.connectguard;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -184,53 +185,35 @@ public class CartFragment extends Fragment {
 
     }
 
-    public void addToCart(final View view){
-
-        if (constants.getProductId(view.getContext()) != null){
-
-            constants.getDatabaseReference().child("products").child(constants.getProductId(view.getContext())).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    constants.getDatabaseReference().child("Cart").child(constants.getProductId(view.getContext())).setValue(new CartModel(snapshot.child("productImage").getValue().toString(), snapshot.child("productName").getValue().toString(), snapshot.child("productModel").getValue().toString(), 10));
-                    Toast.makeText(view.getContext(), snapshot.child("productName").getValue().toString()+" Added To Cart", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
-
-    }
 
     public void setRecyclerView(final View view){
 
-        constants.getDatabaseReference().child("Cart").addValueEventListener(new ValueEventListener() {
+        class GetCartOrdersTask extends AsyncTask<Void, Void, List<CartModel>> {
+
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            protected List<CartModel> doInBackground(Void... voids) {
+                List<CartModel> cartOrdersList = CartDatabaseInstance
+                        .getInstance(view.getContext())
+                        .getAppDatabase()
+                        .cartDao()
+                        .getAllCartOrders();
+                return cartOrdersList;
+            }
 
-                for (DataSnapshot child : snapshot.getChildren()){
+            @Override
+            protected void onPostExecute(List<CartModel> cartModelList) {
+                super.onPostExecute(cartModelList);
 
-                    cartList.add(new CartModel(child.child("product_image").getValue().toString(), child.child("product_name").getValue().toString(), child.child("product_catgory").getValue().toString(), Integer.parseInt(child.child("product_amount").getValue().toString())));
-
-                }
                 cart_recyclerView = view.findViewById(R.id.cart_items);
-                adapter = new CartRecyclerViewAdapter(cartList);
+                adapter = new CartRecyclerViewAdapter(cartModelList);
                 cart_recyclerView.setAdapter(adapter);
                 cart_recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
 
             }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        GetCartOrdersTask getCartOrdersTask = new GetCartOrdersTask();
+        getCartOrdersTask.execute();
 
     }
 
