@@ -45,7 +45,6 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View fragment_cart_item_view = inflater.inflate(R.layout.fragment_cart_item, container, false);
         final View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         setRecyclerView(view);

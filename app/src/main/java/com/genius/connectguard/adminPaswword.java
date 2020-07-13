@@ -22,14 +22,26 @@ public class adminPaswword extends Fragment
 {
     private View view ;
     private EditText adminPassworrd ;
-    private Button adminBtn ;
+    private Button adminBtn;
+    private Button cancelBtn;
 
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.admin_password,null);
+
+        cancelBtn = view.findViewById(R.id.cancel_button_in_admin_password);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
+
         return view;
     }
 
@@ -66,5 +78,7 @@ public class adminPaswword extends Fragment
 
             }
         });
+
+
     }
 }

@@ -27,36 +27,82 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_main, container, false);
-        final int[] tabIcon = {R.drawable.home_icon, R.drawable.cart_icon, R.drawable.admin_icon, R.drawable.settings_icon};
+
+        constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.child("email").getValue().toString().equals("mesho.moris@gmail.com")){
+
+                    final int[] tabIcon = {R.drawable.home_icon, R.drawable.cart_icon, R.drawable.admin_icon, R.drawable.settings_icon};
+
+                    tabLayout = view.findViewById(R.id.home_tab);
+                    for (int i = 0; i < tabIcon.length; i++) {
+                        View view2 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
+                        TabLayout.Tab tab = tabLayout.getTabAt(i);
+                        view2.findViewById(R.id.tab_icon).setBackgroundResource(tabIcon[i]);
+                        if (tab != null) {
+                            tab.setCustomView(view2);
+                        }
+                    }
+
+                    viewPager = view.findViewById(R.id.home_viewpager);
+                    homeViewPager = new HomeViewPager(getActivity().getSupportFragmentManager());
+
+                    homeViewPager.addFragment(new HomeFragment(), "Home");
+                    homeViewPager.addFragment(new CartFragment(), "Cart");
+                    homeViewPager.addFragment(new SettingsFragment(), "Settings");
+                    homeViewPager.addFragment(new AdminFragment(), "Admin Panel");
+
+                    viewPager.setAdapter(homeViewPager);
+                    tabLayout.setupWithViewPager(viewPager);
 
 
-        tabLayout = view.findViewById(R.id.home_tab);
-        for (int i = 0; i < tabIcon.length; i++) {
-            View view2 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            view2.findViewById(R.id.tab_icon).setBackgroundResource(tabIcon[i]);
-            if (tab != null) {
-                tab.setCustomView(view2);
+                    tabLayout.getTabAt(0).setIcon(R.drawable.home_icon);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.cart_icon);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.settings_icon);
+                    tabLayout.getTabAt(3).setIcon(R.drawable.admin_icon);
+
+                }else {
+
+                    final int[] tabIcon = {R.drawable.home_icon, R.drawable.cart_icon, R.drawable.admin_icon, R.drawable.settings_icon};
+
+                    tabLayout = view.findViewById(R.id.home_tab);
+                    for (int i = 0; i < tabIcon.length; i++) {
+                        View view2 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
+                        TabLayout.Tab tab = tabLayout.getTabAt(i);
+                        view2.findViewById(R.id.tab_icon).setBackgroundResource(tabIcon[i]);
+                        if (tab != null) {
+                            tab.setCustomView(view2);
+                        }
+                    }
+
+                    viewPager = view.findViewById(R.id.home_viewpager);
+                    homeViewPager = new HomeViewPager(getActivity().getSupportFragmentManager());
+
+                    homeViewPager.addFragment(new HomeFragment(), "Home");
+                    homeViewPager.addFragment(new CartFragment(), "Cart");
+                    homeViewPager.addFragment(new SettingsFragment(), "Settings");
+
+                    viewPager.setAdapter(homeViewPager);
+                    tabLayout.setupWithViewPager(viewPager);
+
+
+                    tabLayout.getTabAt(0).setIcon(R.drawable.home_icon);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.cart_icon);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.settings_icon);
+
+                }
+
             }
-        }
 
-        viewPager = view.findViewById(R.id.home_viewpager);
-        homeViewPager = new HomeViewPager(getActivity().getSupportFragmentManager());
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        homeViewPager.addFragment(new HomeFragment(), "Home");
-        homeViewPager.addFragment(new CartFragment(), "Cart");
-        homeViewPager.addFragment(new AdminFragment(), "Admin Panel");
-        homeViewPager.addFragment(new SettingsFragment(), "Settings");
-
-        viewPager.setAdapter(homeViewPager);
-        tabLayout.setupWithViewPager(viewPager);
-
-
-        tabLayout.getTabAt(0).setIcon(R.drawable.home_icon);
-        tabLayout.getTabAt(1).setIcon(R.drawable.cart_icon);
-        tabLayout.getTabAt(2).setIcon(R.drawable.admin_icon);
-        tabLayout.getTabAt(3).setIcon(R.drawable.settings_icon);
+            }
+        });
 
         return view;
     }

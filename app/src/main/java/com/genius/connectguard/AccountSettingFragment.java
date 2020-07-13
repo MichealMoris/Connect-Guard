@@ -127,7 +127,7 @@ public class AccountSettingFragment extends Fragment {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-        fragmentTransaction.replace(R.id.account_settings_framelayout, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
@@ -165,7 +165,7 @@ public class AccountSettingFragment extends Fragment {
 
                         if (!isDone[0]){
 
-                            Toast.makeText(view.getContext(), "Enter Correct Old Password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "Please Enter Your Old Password Correctly!", Toast.LENGTH_SHORT).show();
                             snapshot.getRef().child("userImage").setValue(image);
                             snapshot.getRef().child("name").setValue(name);
                             snapshot.getRef().child("adress").setValue(address);
