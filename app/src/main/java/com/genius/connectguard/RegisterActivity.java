@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.genius.constants.constants;
@@ -24,14 +25,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         constants.initFireBase();
 
-        if (!constants.getUId(this).equals("empty"))
+        if (!constants.getUId(this).equals("empty") )
         {
             startFragment(new MainFragment());
-
+            
         }else
         {
             startFragment(new SignInFragment());
         }
+
 
     }
 

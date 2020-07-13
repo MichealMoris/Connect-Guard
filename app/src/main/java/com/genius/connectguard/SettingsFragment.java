@@ -124,5 +124,7 @@ public class SettingsFragment extends Fragment {
                 constants.replaceFragment(SettingsFragment.this,new SignInFragment(),false);
             }
         });
+
+
     }
 }

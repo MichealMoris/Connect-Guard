@@ -1,11 +1,13 @@
 package com.genius.connectguard;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.service.autofill.VisibilitySetterAction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class MainFragment extends Fragment {
 
         viewPager.setAdapter(homeViewPager);
         tabLayout.setupWithViewPager(viewPager);
+
 
         tabLayout.getTabAt(0).setIcon(R.drawable.home_icon);
         tabLayout.getTabAt(1).setIcon(R.drawable.cart_icon);

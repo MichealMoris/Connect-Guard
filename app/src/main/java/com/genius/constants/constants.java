@@ -31,7 +31,7 @@ import java.util.Locale;
 public class constants
 {
 
-    public static userModel myProducts ;
+    public static userModel userModels ;
     public static productModel productModel ;
 
     //progress dialog

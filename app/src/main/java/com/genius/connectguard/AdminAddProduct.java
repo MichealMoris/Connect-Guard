@@ -107,7 +107,8 @@ public class AdminAddProduct extends Fragment
 
                 }else
                     {
-                        uploadImage(name , model , description , price , selectedPostImage , 1);
+
+                        uploadImage(name , model , description , price , selectedPostImage  , 1);
                     }
 
 
@@ -142,7 +143,9 @@ public class AdminAddProduct extends Fragment
                     Uri downloadUri = task.getResult();
                     String imageUrl = downloadUri.toString();
 
-                    saveNewRoom(name,modell , description , price , imageUrl , type );
+                    String uId = task.getResult().toString();
+
+                    saveNewRoom(name,modell , description , price , imageUrl , uId , type );
 
                 }
             }
@@ -151,7 +154,7 @@ public class AdminAddProduct extends Fragment
 
 
 
-    private void saveNewRoom(final String name , final String modell , final String description , final String price , final String imageUri , final int type)
+    private void saveNewRoom(final String name , final String modell , final String description , final String price , final String imageUri,final String uId , final int type)
     {
         constants.getDatabaseReference().child("Users").child(constants.getUId(requireActivity())).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -160,7 +163,7 @@ public class AdminAddProduct extends Fragment
                 final String roomId = constants.getDatabaseReference().child("products").push().getKey();
 
                 userModel userModel = dataSnapshot.getValue(userModel.class);
-                productModel model = new productModel(name,modell,description , price , imageUri , type );
+                productModel model = new productModel(name,modell,description , price , imageUri ,userModel.getuId(), type );
 
                 if (roomId != null)
                 {
@@ -170,12 +173,15 @@ public class AdminAddProduct extends Fragment
                         public void onComplete(@NonNull Task<Void> task)
                         {
                             constants.dissmisProgress();
-                            constants.replaceFragment(AdminAddProduct.this,new HomeFragment(),true);
+
+                            constants.replaceFragment(AdminAddProduct.this,new MainFragment(),true);
 
 
                         }
                     });
                 }
+
+
 
             }
 

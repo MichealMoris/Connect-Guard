@@ -8,7 +8,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import com.genius.constants.constants;
 
 public class AdminFragment extends Fragment {
 
@@ -18,8 +21,12 @@ public class AdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_admin, container, false);
 
+
+
         request = (RelativeLayout)rootView.findViewById(R.id.bt_request);
         addProduct = (RelativeLayout)rootView.findViewById(R.id.bt_add);
+
+
 
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
