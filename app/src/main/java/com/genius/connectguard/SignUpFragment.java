@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -93,7 +94,7 @@ public class SignUpFragment extends Fragment {
         mobileField = view.findViewById(R.id.register_mobile_field);
         adressField = view.findViewById(R.id.register_adress_field);
         carModel = view.findViewById(R.id.register_model_field);
-        circleImageView = view.findViewById(R.id.pick_user_image);
+        circleImageView = view.findViewById(R.id.user_picked_image);
         userRegisterChooseLang = view.findViewById(R.id.userRegisterChooseLang);
         registerBtn = view.findViewById(R.id.register_register_btn);
 
