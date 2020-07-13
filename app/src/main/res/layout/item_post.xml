@@ -76,33 +76,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/post_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="3"
-            android:text="20 L.E"
-            android:textColor="#FA0303"
-
-            android:textStyle="bold" />
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/add_to_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="5dp"
-
             android:elevation="10sp"
+
             app:cardBackgroundColor="#05534C"
             app:cardCornerRadius="15dp">
 
@@ -118,12 +100,28 @@
                 android:visibility="visible" />
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/post_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 L.E"
+            android:maxLines="3"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="#FA0303"
+            android:textStyle="bold"
+            android:ellipsize="end"
+
+            />
+
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_shopping_cart_24"
             android:layout_marginLeft="70dp"
-            android:src="@drawable/ic_baseline_shopping_cart_24" />
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
