@@ -17,7 +17,7 @@ public class CartDatabaseInstance {
 
         //creating the app database with Room database builder
         //MyToDos is the name of the database
-        cartDatabase = Room.databaseBuilder(mCtx, CartDatabase.class, "CartOrders").build();
+        cartDatabase = Room.databaseBuilder(mCtx, CartDatabase.class, "CartOrders").fallbackToDestructiveMigration().build();
     }
 
     public static synchronized CartDatabaseInstance getInstance(Context mCtx) {

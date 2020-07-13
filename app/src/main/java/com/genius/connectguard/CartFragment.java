@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.genius.constants.constants;
 import com.genius.models.CartModel;
 import com.google.firebase.database.DataSnapshot;
@@ -32,16 +34,18 @@ public class CartFragment extends Fragment {
     private CartRecyclerViewAdapter cartRecyclerViewAdapter;
     private List<CartModel> cartModelList = new ArrayList<>();
     private String key;
-    private ImageView decreaseAmount;
-    private ImageView increaseAmount;
+    private TextView decreaseAmount;
+    private TextView increaseAmount;
     private TextView amount;
     private List<CartModel> cartList = new ArrayList<>();
     private CartRecyclerViewAdapter adapter;
+    private ElegantNumberButton elegantNumberButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        final View fragment_cart_item_view = inflater.inflate(R.layout.fragment_cart_item, container, false);
         final View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         setRecyclerView(view);
@@ -49,90 +53,6 @@ public class CartFragment extends Fragment {
         return view;
     }
 
-
-    private void getOrders(final View view/*, final int amount*/)
-    {
-        constants.getDatabaseReference().child("products").child(constants.getProductId(view.getContext())).addValueEventListener(new ValueEventListener()
-        {
-
-
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-
-                /*Cart cart = new Cart(dataSnapshot.child("productImage").toString(), dataSnapshot.child("productName").toString(), dataSnapshot.child("productModel").toString(), 0);
-
-                cartList.add(cart);
-
-                cartRecyclerViewAdapter = new CartFragment.CartRecyclerViewAdapter(cartList);
-                recyclerView.setAdapter(cartRecyclerViewAdapter);*/
-
-                Toast.makeText(view.getContext(), dataSnapshot.child("productName").toString(), Toast.LENGTH_SHORT).show();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
-
-            }
-        });
-    }
-
-    /*public int productAmount(final View view){
-
-        decreaseAmount = view.findViewById(R.id.tv_minus);
-        increaseAmount = view.findViewById(R.id.tv_plus);
-        amount = view.findViewById(R.id.tv_amount);
-
-        constants.getDatabaseReference().child("products").child(constants.getProductId(view.getContext())).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull final DataSnapshot snapshot) {
-
-                constants.saveProductName(view.getContext(), snapshot.child("productName").getValue().toString());
-                constants.saveProductAmount(view.getContext(), snapshot.child("productName").getValue().toString(), Integer.parseInt(amount.getText().toString()));
-                decreaseAmount.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if(Integer.parseInt(amount.getText().toString()) > 0){
-
-                            if (constants.getProductAmount(view.getContext(), snapshot.child("productName").getValue().toString()) != 0){
-
-                                amount.setText(constants.getProductAmount(view.getContext(), snapshot.child("productName").getValue().toString()) - 1);
-
-                            }
-
-                        }
-
-                    }
-                });
-
-                increaseAmount.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        amount.setText(constants.getProductAmount(view.getContext(), snapshot.child("productName").getValue().toString() + 1));
-
-                    }
-                });
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return constants.getProductAmount(view.getContext(), constants.getProductName(view.getContext()));
-
-    }
-*/
     public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.CartViewHolder>{
 
         List<CartModel> cartModelList;
@@ -146,18 +66,46 @@ public class CartFragment extends Fragment {
         @Override
         public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            View view = LayoutInflater.from(requireContext()).inflate(R.layout.item_cart, parent , false);
+            View view = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_cart_item, parent , false);
             return new CartViewHolder(view);
 
 
         }
 
         @Override
-        public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final CartViewHolder holder, final int position) {
 
             Picasso.get().load(cartModelList.get(position).getProduct_image()).into(holder.product_image);
             holder.product_name.setText(cartModelList.get(position).getProduct_name());
             holder.product_model.setText(cartModelList.get(position).getProduct_catgory());
+            holder.elegantNumberButton.setNumber(String.valueOf(cartModelList.get(position).getProduct_amount()));
+            holder.elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+                @Override
+                public void onValueChange(ElegantNumberButton v, int oldValue, final int newValue) {
+
+                    class UpdateOrderAmount extends AsyncTask<Void, Void, Void>{
+
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            CartDatabaseInstance.getInstance(holder.itemView.getContext()).getAppDatabase().cartDao().updateOrderAmount(cartModelList.get(position).getProduct_name(), String.valueOf(newValue));
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+
+                            getFragmentManager().beginTransaction().detach(CartFragment.this).attach(CartFragment.this).commit();
+
+                        }
+                    }
+
+                    UpdateOrderAmount updateOrderAmount = new UpdateOrderAmount();
+                    updateOrderAmount.execute();
+
+                }
+            });
+
 
         }
 
@@ -171,6 +119,7 @@ public class CartFragment extends Fragment {
             ImageView product_image;
             TextView product_name;
             TextView product_model;
+            ElegantNumberButton elegantNumberButton;
 
             public CartViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -178,6 +127,8 @@ public class CartFragment extends Fragment {
                 product_image = itemView.findViewById(R.id.iv_product);
                 product_name = itemView.findViewById(R.id.tv_productName);
                 product_model = itemView.findViewById(R.id.tv_category);
+                elegantNumberButton = itemView.findViewById(R.id.order_amount);
+
 
             }
         }
@@ -221,8 +172,12 @@ public class CartFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
         }
     }
+
+
 
 }

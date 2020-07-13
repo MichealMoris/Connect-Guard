@@ -16,11 +16,11 @@ public class CartModel {
     @ColumnInfo(name = "product_catgory")
     private String product_catgory;
     @ColumnInfo(name = "product_amount")
-    private int product_amount;
+    private String product_amount;
     @ColumnInfo(name = "product_price")
     private int product_price;
 
-    public CartModel(String product_image, String product_name, String product_catgory, int product_amount, int product_price) {
+    public CartModel(String product_image, String product_name, String product_catgory, String product_amount, int product_price) {
         this.product_image = product_image;
         this.product_name = product_name;
         this.product_catgory = product_catgory;
@@ -62,11 +62,11 @@ public class CartModel {
         this.product_catgory = product_catgory;
     }
 
-    public int getProduct_amount() {
+    public String getProduct_amount() {
         return product_amount;
     }
 
-    public void setProduct_amount(int product_amount) {
+    public void setProduct_amount(String product_amount) {
         this.product_amount = product_amount;
     }
 

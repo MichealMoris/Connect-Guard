@@ -33,7 +33,7 @@ public class Splash extends AppCompatActivity {
 
                 while (progressStatues[0] <= 100){
 
-                    progressStatues[0] += 5;
+                    progressStatues[0] += 10;
 
                     try {
                         // Sleep for 300 milliseconds.

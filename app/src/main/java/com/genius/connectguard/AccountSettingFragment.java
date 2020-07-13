@@ -134,31 +134,46 @@ public class AccountSettingFragment extends Fragment {
 
     private void changeData(final View view, final String image, final String name, final String address, final String mobile, final String car_model, final String old_password, final String new_password, final String spare_user_image){
 
+        final boolean[] isDone = {false};
+
         constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     if (old_password.equals(snapshot.child("password").getValue().toString())){
 
-                        snapshot.getRef().child("password").setValue(new_password);
+                        if (new_password.equals("")){
+
+                            snapshot.getRef().child("password").setValue(snapshot.child("password").getValue().toString());
+
+                        }else{
+
+                            snapshot.getRef().child("password").setValue(new_password);
+
+                        }
                         snapshot.getRef().child("userImage").setValue(image);
                         snapshot.getRef().child("name").setValue(name);
                         snapshot.getRef().child("adress").setValue(address);
                         snapshot.getRef().child("mobile").setValue(mobile);
                         snapshot.getRef().child("carModel").setValue(car_model);
-                        Toast.makeText(view.getContext(), "Password Changed Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Data Updated Successfully", Toast.LENGTH_SHORT).show();
                         setFragemnt(new SettingsFragment());
+                        isDone[0] = true;
                         return;
 
                     }else{
 
-                        Toast.makeText(view.getContext(), "Enter Correct Old Password", Toast.LENGTH_SHORT).show();
-                        snapshot.getRef().child("userImage").setValue(image);
-                        snapshot.getRef().child("name").setValue(name);
-                        snapshot.getRef().child("adress").setValue(address);
-                        snapshot.getRef().child("mobile").setValue(mobile);
-                        snapshot.getRef().child("carModel").setValue(car_model);
-                        return;
+                        if (!isDone[0]){
+
+                            Toast.makeText(view.getContext(), "Enter Correct Old Password", Toast.LENGTH_SHORT).show();
+                            snapshot.getRef().child("userImage").setValue(image);
+                            snapshot.getRef().child("name").setValue(name);
+                            snapshot.getRef().child("adress").setValue(address);
+                            snapshot.getRef().child("mobile").setValue(mobile);
+                            snapshot.getRef().child("carModel").setValue(car_model);
+                            return;
+
+                        }
 
                     }
 

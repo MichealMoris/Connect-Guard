@@ -1,6 +1,5 @@
 package com.genius.connectguard;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,18 +11,28 @@ import com.genius.models.CartModel;
 import java.util.List;
 
 @Dao
-public interface CartDao {
+public abstract class CartDao {
 
     @Query("SELECT * FROM cartmodel")
-    List<CartModel> getAllCartOrders();
+    abstract List<CartModel> getAllCartOrders();
+
+    @Query("SELECT * FROM cartmodel WHERE product_name == :productName")
+    abstract CartModel getCartItem(String productName);
 
     @Insert
-    void addToCart(CartModel cartModel);
+    abstract void addToCart(CartModel cartModel);
 
     @Delete
-    void deleteCartItem(CartModel cartModel);
+    abstract void deleteCartItem(CartModel cartModel);
 
     @Update
-    void updateCart(CartModel cartModel);
+    abstract void updateCart(CartModel cartModel);
+
+    public void updateOrderAmount(String productName, String amount) {
+        CartModel cartModel = getCartItem(productName);
+        cartModel.setProduct_amount(amount);
+        updateCart(cartModel);
+    }
 
 }
+
