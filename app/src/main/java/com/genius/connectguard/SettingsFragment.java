@@ -1,9 +1,11 @@
 package com.genius.connectguard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -38,7 +40,21 @@ public class SettingsFragment extends Fragment {
           view = inflater.inflate(R.layout.fragment_settings, container, false);
 
           change_language = view.findViewById(R.id.change_language);
-          constants.setLanguage(getActivity(), change_language.getSelectedItem().toString());
+          change_language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+              @Override
+              public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
+
+                  constants.setLanguage(getActivity(), change_language.getSelectedItem().toString());
+
+
+              }
+
+              @Override
+              public void onNothingSelected(AdapterView<?> parent) {
+
+              }
+
+          });
 
         accountSettings = view.findViewById(R.id.tv_accountSettings);
         accountSettings.setOnClickListener(new View.OnClickListener() {

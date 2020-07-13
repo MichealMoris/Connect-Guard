@@ -1,31 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".SignUpFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FFF"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="50dp">
 
         <FrameLayout
-            android:id="@+id/addUserImage"
+            android:id="@+id/edit_profile_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
+            <View
+                android:id="@+id/view5"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_image_circle" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/pick_user_image"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
+                android:id="@+id/user_picked_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center" />
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/camera_icon" />
+                android:background="@drawable/shaded_image_circle" />
+
+            <ImageView
+                android:id="@+id/pick_user_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/add_photo_icon" />
 
         </FrameLayout>
 
@@ -175,4 +196,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email">بريدك الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="signup_with">سجل عن طريق</string>
+    <string name="create_new_account">انشاء حساب</string>
+    <string name="forget_password">نسيت كلمة المرور</string>
+    <string name="full_name">الاسم كامل</string>
+    <string name="e_mail">بريدك الالكتروني</string>
+    <string name="address">العنوان</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="car_model">نوع السيارة</string>
+    <string name="language">اللغة</string>
+    <string name="sign_up">سجل الدجول</string>
+    <string name="already_have_account">هل تمتلك حساب</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="settings">الاعدادات</string>
+    <string name="account_settings">اعدادات الحساب</string>
+    <string name="requests">الطلبات</string>
+    <string name="order">طلب:</string>
+    <string name="send_order">ارسل الطلب</string>
+    <string name="price">مجموع الحساب:</string>
+    <string name="sign_out">تسجيل خروج</string>
+    <string name="add_to_cart">اضف الي عربة التسوق</string>
+    <string name="done">تم</string>
+    <string name="enter_your_email_to_forget_your_password">ادخل البريد الالكتروني لتغيير كلمة مرورك:</string>
+    <string name="we_will_send_you_confirmation_email_to_forget_your_password">سوف نرسل لك بريد الكتروني لتغيير كلمة مرورك</string>
+    <string name="send_confirmation_email">ارسل البريد الالكتروني</string>
+    <string name="email_sent_successfully">تم ارسال البريد الالكتروني بنجاح!</string>
+    <string name="confirmation_email_sent_to_your_account_successfuly">تم ارسال البريد الالكتروني لحسابك بنجاح</string>
+    <string name="et_product_name_hint">ادخل الاسم</string>
+    <string name="tv_add_product">اضف جديد</string>
+    <string name="tv_request">ارسل الطلب</string>
+    <string name="et_product_model_hint">ادخل النوع</string>
+    <string name="et_product_description_hint">ادخل الوصف</string>
+    <string name="et_product_price_hint">ادخل السعر</string>
+    <string name="button_product_submit">تم</string>
+    <string name="admin_panel">لوحة التحكم</string>
+    <string name="cart">عربة التسوق</string>
+    <string name="checkout">ادفع</string>
+    <string name="old_password">كلمة المرور القديمة</string>
+    <string name="cancel">الغاء</string>
+    <string name="add_to_card">اضف الي عربة التسوق</string>
+    <string name="or">أو</string>
+</resources>

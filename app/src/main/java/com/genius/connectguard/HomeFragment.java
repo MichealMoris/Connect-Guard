@@ -1,5 +1,6 @@
 package com.genius.connectguard;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.genius.constants.constants;
+import com.genius.models.CartModel;
 import com.genius.models.productModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -46,8 +49,9 @@ public class HomeFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState)
     {
+
         view = inflater.inflate(R.layout.fragment_home,null);
         return view;
     }
@@ -173,18 +177,36 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v) {
 
-
                         constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            public void onDataChange(@NonNull final DataSnapshot snapshot) {
 
-                                for (DataSnapshot child : snapshot.getChildren()){
+                                for (final DataSnapshot child : snapshot.getChildren()){
 
                                     if (snapshot.child(child.getKey()).child("productName").getValue().toString().equals(postModelList.get(position).getProductName())){
 
-                                        constants.saveProductId(holder.itemView.getContext(), child.getKey());
-                                        new CartFragment().addToCart(holder.itemView);
+                                        class AddToCart extends AsyncTask<Void, Void, Void> {
 
+
+                                            @Override
+                                            protected Void doInBackground(Void... voids) {
+
+                                                CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase().cartDao().addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), 10, 100));
+
+                                                return null;
+                                            }
+
+                                            @Override
+                                            protected void onPostExecute(Void aVoid) {
+                                                super.onPostExecute(aVoid);
+
+                                                Toast.makeText(view.getContext(), snapshot.child(child.getKey()).child("productName").getValue().toString()+" Added To Cart", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+
+                                        AddToCart addToCart = new AddToCart();
+                                        addToCart.execute();
 
                                     }
 
@@ -199,29 +221,6 @@ public class HomeFragment extends Fragment
                             }
                         });
 
-                        /*constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
-                                *//*for (DataSnapshot child : snapshot.getChildren()){
-
-                                    constants.saveProductId(holder.itemView.getContext(), child.getKey());
-                                    Toast.makeText(holder.itemView.getContext(), constants.getProductId(holder.itemView.getContext()), Toast.LENGTH_SHORT).show();
-                                    *//**//*setFragemnt(new CartFragment());*//**//*
-
-
-                                }*//*
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-*/
                     }
                 });
 

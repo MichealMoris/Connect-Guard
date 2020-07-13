@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/language"
                 android:textColor="#000"
@@ -98,7 +98,9 @@
             android:id="@+id/tv_accountSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="10dp"
+            android:gravity="start"
             android:text="@string/account_settings"
             android:textColor="#000"
             android:textSize="20sp" />

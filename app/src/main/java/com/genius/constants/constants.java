@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.View;
 import android.widget.Toast;
 
 import com.genius.connectguard.R;
@@ -20,6 +25,8 @@ import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import java.util.Locale;
 
 public class constants
 {
@@ -225,5 +232,14 @@ public class constants
         return System.currentTimeMillis();
     }
 
+    public static void setAppLocale(String locale, Context context){
+
+        Resources resources = context.getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(new Locale(locale.toLowerCase()));
+        resources.updateConfiguration(configuration, displayMetrics);
+
+    }
 
 }
