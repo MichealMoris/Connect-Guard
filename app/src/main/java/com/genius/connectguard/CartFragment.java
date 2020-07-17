@@ -40,6 +40,7 @@ public class CartFragment extends Fragment {
     private List<CartModel> cartList = new ArrayList<>();
     private CartRecyclerViewAdapter adapter;
     private ElegantNumberButton elegantNumberButton;
+    private TextView total;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +49,7 @@ public class CartFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         setRecyclerView(view);
+        new TotalCounterTask().execute();
 
         return view;
     }
@@ -86,7 +88,17 @@ public class CartFragment extends Fragment {
 
                         @Override
                         protected Void doInBackground(Void... voids) {
+
+                            CartModel cartModel = new CartModel();
+                            cartModel.setId(cartModelList.get(position).getId());
+
                             CartDatabaseInstance.getInstance(holder.itemView.getContext()).getAppDatabase().cartDao().updateOrderAmount(cartModelList.get(position).getProduct_name(), String.valueOf(newValue));
+
+                            if (cartModelList.get(position).getProduct_amount().equals("0") || newValue == 0){
+
+                                CartDatabaseInstance.getInstance(holder.itemView.getContext()).getAppDatabase().cartDao().deleteCartItem(cartModel);
+
+                            }
                             return null;
                         }
 
@@ -128,7 +140,6 @@ public class CartFragment extends Fragment {
                 product_model = itemView.findViewById(R.id.tv_category);
                 elegantNumberButton = itemView.findViewById(R.id.order_amount);
 
-
             }
         }
 
@@ -147,6 +158,7 @@ public class CartFragment extends Fragment {
                         .getAppDatabase()
                         .cartDao()
                         .getAllCartOrders();
+                CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase().cartDao().deleteDuplicates();
                 return cartOrdersList;
             }
 
@@ -161,6 +173,7 @@ public class CartFragment extends Fragment {
 
             }
         }
+
 
         GetCartOrdersTask getCartOrdersTask = new GetCartOrdersTask();
         getCartOrdersTask.execute();
@@ -177,6 +190,30 @@ public class CartFragment extends Fragment {
         }
     }
 
+    class TotalCounterTask extends AsyncTask<Void, Void, Integer>{
 
+        @Override
+        protected Integer doInBackground(Void... voids) {
+
+            List<CartModel> getTotalAndAmount = CartDatabaseInstance.getInstance(getActivity().getApplicationContext()).getAppDatabase().cartDao().getAllCartOrders();
+            int totalNum = 0;
+            for (int i = 0; i < getTotalAndAmount.size(); i++){
+
+                totalNum = totalNum + (getTotalAndAmount.get(i).getProduct_price() * Integer.parseInt(getTotalAndAmount.get(i).getProduct_amount()));
+
+            }
+
+            return totalNum;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            total = getActivity().findViewById(R.id.tv_total);
+            total.setText(integer.toString());
+
+        }
+    }
 
 }

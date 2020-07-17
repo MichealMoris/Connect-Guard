@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -17,6 +18,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -163,7 +165,7 @@ public class HomeFragment extends Fragment
 
                 holder.postText.setText(text);
                 holder.postModell.setText(modell);
-                holder.postPrise.setText(price);
+                holder.postPrise.setText(price + " L.E");
                 holder.postDescriptiom.setText(description);
 
 
@@ -192,7 +194,7 @@ public class HomeFragment extends Fragment
 
                                                 CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase()
                                                         .cartDao()
-                                                        .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", 1));
+                                                        .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1));
                                                 return null;
                                             }
 
@@ -221,29 +223,6 @@ public class HomeFragment extends Fragment
                             }
                         });
 
-                        /*constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
-                                *//*for (DataSnapshot child : snapshot.getChildren()){
-
-                                    constants.saveProductId(holder.itemView.getContext(), child.getKey());
-                                    Toast.makeText(holder.itemView.getContext(), constants.getProductId(holder.itemView.getContext()), Toast.LENGTH_SHORT).show();
-                                    *//**//*setFragemnt(new CartFragment());*//**//*
-
-
-                                }*//*
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-*/
                     }
                 });
 
@@ -308,7 +287,7 @@ public class HomeFragment extends Fragment
             TextView postModell ;
             TextView postPrise ;
             TextView postDescriptiom ;
-            CardView add_to_cart;
+            Button add_to_cart;
 
 
             public vh(@NonNull View itemView)
@@ -327,5 +306,6 @@ public class HomeFragment extends Fragment
             }
         }
     }
+
 
 }

@@ -34,5 +34,15 @@ public abstract class CartDao {
         updateCart(cartModel);
     }
 
+    public void updateTotal(String productName, String amount) {
+        CartModel cartModel = getCartItem(productName);
+        cartModel.setTotal(Integer.parseInt(amount));
+        updateCart(cartModel);
+    }
+
+
+    @Query("DELETE FROM cartmodel WHERE id NOT IN (SELECT MIN(id) FROM CartModel GROUP BY product_name, product_catgory)")
+    abstract void deleteDuplicates();
+
 }
 

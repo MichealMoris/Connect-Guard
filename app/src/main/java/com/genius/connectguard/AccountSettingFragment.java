@@ -127,7 +127,7 @@ public class AccountSettingFragment extends Fragment {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.account_settings_framelayout, fragment);
         fragmentTransaction.commit();
 
     }

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 import com.genius.models.CartModel;
 
-@Database(entities = {CartModel.class}, version = 2)
+@Database(entities = {CartModel.class}, version = 3)
 public abstract class CartDatabase extends RoomDatabase {
 
     public abstract CartDao cartDao();

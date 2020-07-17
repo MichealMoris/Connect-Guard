@@ -54,7 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 app:backGroundColor="@color/mainDarkGreen"
-                app:initialNumber="1"
+                app:initialNumber="0"
                 app:finalNumber="100"/>
 
 
