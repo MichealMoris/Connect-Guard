@@ -226,6 +226,57 @@ public class HomeFragment extends Fragment
                     }
                 });
 
+            holder.add_to_cart_icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull final DataSnapshot snapshot) {
+
+                            for (final DataSnapshot child : snapshot.getChildren()){
+
+                                if (snapshot.child(child.getKey()).child("productName").getValue().toString().equals(postModelList.get(position).getProductName())){
+
+                                    class AddCartOrdersTask extends AsyncTask<Void, Void, Void> {
+
+                                        @Override
+                                        protected Void doInBackground(Void... voids) {
+
+                                            CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase()
+                                                    .cartDao()
+                                                    .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1));
+                                            return null;
+                                        }
+
+                                        @Override
+                                        protected void onPostExecute(Void aVoid) {
+                                            super.onPostExecute(aVoid);
+
+                                            Toast.makeText(view.getContext(), snapshot.child(child.getKey()).child("productName").getValue().toString() + " " + view.getResources().getString(R.string.item_added_to_cart), Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+
+                                    AddCartOrdersTask addCartOrdersTask = new AddCartOrdersTask();
+                                    addCartOrdersTask.execute();
+
+                                }
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            });
 
 
         }
@@ -288,6 +339,7 @@ public class HomeFragment extends Fragment
             TextView postPrise ;
             TextView postDescriptiom ;
             Button add_to_cart;
+            ImageView add_to_cart_icon;
 
 
             public vh(@NonNull View itemView)
@@ -299,8 +351,8 @@ public class HomeFragment extends Fragment
                 postModell = itemView.findViewById(R.id.post_modell);
                 postPrise = itemView.findViewById(R.id.post_price);
                 postDescriptiom = itemView.findViewById(R.id.post_description);
-
                 add_to_cart = itemView.findViewById(R.id.add_to_cart);
+                add_to_cart_icon = itemView.findViewById(R.id.add_to_cart_icon);
 
 
             }
