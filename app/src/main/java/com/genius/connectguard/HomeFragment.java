@@ -194,7 +194,7 @@ public class HomeFragment extends Fragment
 
                                                 CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase()
                                                         .cartDao()
-                                                        .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1));
+                                                        .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1,Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1));
                                                 return null;
                                             }
 
@@ -246,7 +246,7 @@ public class HomeFragment extends Fragment
 
                                             CartDatabaseInstance.getInstance(view.getContext()).getAppDatabase()
                                                     .cartDao()
-                                                    .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1));
+                                                    .addToCart(new CartModel(snapshot.child(child.getKey()).child("productImage").getValue().toString(), snapshot.child(child.getKey()).child("productName").getValue().toString(), snapshot.child(child.getKey()).child("productModel").getValue().toString(), "1", Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()), Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1, Integer.parseInt(snapshot.child(child.getKey()).child("productPrice").getValue().toString()) * 1));
                                             return null;
                                         }
 

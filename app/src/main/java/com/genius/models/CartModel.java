@@ -21,14 +21,17 @@ public class CartModel {
     private int product_price;
     @ColumnInfo(name = "total")
     private int total;
+    @ColumnInfo(name = "order_total")
+    private int order_total;
 
-    public CartModel(String product_image, String product_name, String product_catgory, String product_amount, int product_price, int total) {
+    public CartModel(String product_image, String product_name, String product_catgory, String product_amount, int product_price, int total, int order_total) {
         this.product_image = product_image;
         this.product_name = product_name;
         this.product_catgory = product_catgory;
         this.product_amount = product_amount;
         this.product_price = product_price;
         this.total = total;
+        this.order_total = order_total;
     }
 
     public CartModel() {
@@ -90,5 +93,13 @@ public class CartModel {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public int getOrder_total() {
+        return order_total;
+    }
+
+    public void setOrder_total(int order_total) {
+        this.order_total = order_total;
     }
 }

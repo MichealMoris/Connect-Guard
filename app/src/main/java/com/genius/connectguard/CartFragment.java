@@ -93,6 +93,7 @@ public class CartFragment extends Fragment {
                             cartModel.setId(cartModelList.get(position).getId());
 
                             CartDatabaseInstance.getInstance(holder.itemView.getContext()).getAppDatabase().cartDao().updateOrderAmount(cartModelList.get(position).getProduct_name(), String.valueOf(newValue));
+                            CartDatabaseInstance.getInstance(holder.itemView.getContext()).getAppDatabase().cartDao().updateOrderTotal(cartModelList.get(position).getProduct_name(), String.valueOf(newValue * cartModelList.get(position).getProduct_price()));
 
                             if (cartModelList.get(position).getProduct_amount().equals("0") || newValue == 0){
 
@@ -110,13 +111,11 @@ public class CartFragment extends Fragment {
 
                         }
                     }
-
-                    UpdateOrderAmount updateOrderAmount = new UpdateOrderAmount();
-                    updateOrderAmount.execute();
+                    new UpdateOrderAmount().execute();
 
                 }
             });
-
+            holder.orderTotal.setText(String.valueOf(cartModelList.get(position).getOrder_total()) + " L.E");
 
         }
 
@@ -131,6 +130,7 @@ public class CartFragment extends Fragment {
             TextView product_name;
             TextView product_model;
             ElegantNumberButton elegantNumberButton;
+            TextView orderTotal;
 
             public CartViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -139,6 +139,7 @@ public class CartFragment extends Fragment {
                 product_name = itemView.findViewById(R.id.tv_productName);
                 product_model = itemView.findViewById(R.id.tv_category);
                 elegantNumberButton = itemView.findViewById(R.id.order_amount);
+                orderTotal = itemView.findViewById(R.id.order_item_total_price);
 
             }
         }
@@ -211,9 +212,10 @@ public class CartFragment extends Fragment {
             super.onPostExecute(integer);
 
             total = getActivity().findViewById(R.id.tv_total);
-            total.setText(integer.toString());
+            total.setText(integer.toString()+" L.E");
 
         }
     }
+
 
 }

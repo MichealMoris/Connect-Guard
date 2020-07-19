@@ -34,9 +34,9 @@ public abstract class CartDao {
         updateCart(cartModel);
     }
 
-    public void updateTotal(String productName, String amount) {
+    public void updateOrderTotal(String productName, String orderTotal) {
         CartModel cartModel = getCartItem(productName);
-        cartModel.setTotal(Integer.parseInt(amount));
+        cartModel.setOrder_total(Integer.parseInt(orderTotal));
         updateCart(cartModel);
     }
 
