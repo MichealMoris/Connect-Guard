@@ -117,7 +117,17 @@ public class HomeFragment extends Fragment
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                try {
+                    if (adapter.getFilter() != null){
+
+                        adapter.getFilter().filter(newText);
+
+                    }
+                }catch (Exception e){
+
+
+
+                }
                 return false;
             }
         });
@@ -356,6 +366,16 @@ public class HomeFragment extends Fragment
 
 
             }
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
         }
     }
 

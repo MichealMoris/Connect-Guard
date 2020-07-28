@@ -1,69 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF"
     tools:context=".AdminAddProduct">
 
     <LinearLayout
         android:id="@+id/container_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/new_post_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center"
-            android:background="@color/mainDarkGreen"
-            android:src="@drawable/add_photo_icon"
-            />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="280dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_image_rectangle" />
+
+            <ImageView
+                android:id="@+id/new_post_image"
+                android:layout_width="270dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center" />
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="270dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shaded_image_rectangle" />
+
+            <ImageView
+                android:id="@+id/pick_user_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/add_photo_icon" />
+
+        </FrameLayout>
 
         <EditText
-            android:layout_marginTop="30dp"
             android:id="@+id/product_name"
-            android:layout_below="@+id/product_image"
-            android:hint="@string/et_product_name_hint"
             style="@style/AdminAddET"
-            />
+            android:layout_height="55dp"
+            android:layout_below="@+id/product_image"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_background_pink"
+            android:gravity="center"
+            android:hint="@string/et_product_name_hint" />
 
         <EditText
             android:id="@+id/product_model"
-            android:layout_below="@+id/product_name"
-            android:hint="@string/et_product_model_hint"
             style="@style/AdminAddET"
-            />
+            android:layout_height="55dp"
+            android:layout_below="@+id/product_name"
+            android:background="@drawable/edittext_background_pink"
+            android:gravity="center"
+            android:hint="@string/et_product_model_hint" />
 
         <EditText
             android:id="@+id/product_description"
-            android:layout_below="@+id/product_model"
-            android:hint="@string/et_product_description_hint"
             style="@style/AdminAddET"
-            />
+            android:layout_height="150dp"
+            android:layout_below="@+id/product_model"
+            android:background="@drawable/edittext_background_pink"
+            android:gravity="start|top"
+            android:hint="@string/et_product_description_hint"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/product_price"
-            android:layout_below="@+id/product_description"
-            android:hint="@string/et_product_price_hint"
             style="@style/AdminAddET"
-            />
+            android:layout_height="55dp"
+            android:layout_below="@+id/product_description"
+            android:background="@drawable/edittext_background_pink"
+            android:gravity="center"
+            android:hint="@string/et_product_price_hint" />
 
         <Button
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
             android:id="@+id/add_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="@string/button_product_submit"
             android:layout_below="@id/product_price"
-            />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/button_background"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
     </LinearLayout>
-</FrameLayout>
+</ScrollView>

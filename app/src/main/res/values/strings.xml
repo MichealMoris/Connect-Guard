@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Connect Guard</string>
+    <string name="app_name" translatable="false">Market</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -67,4 +67,8 @@
     <string name="cancel">Cancel</string>
     <string name="add_to_card">Add to Card</string>
     <string name="or">Or</string>
+    <string name="add">Add</string>
+    <string name="thank_you_for_ordering">Thank You For Ordering!</string>
+    <string name="your_order_has_been_sent_and_we_will_contact_you_as_soon_as_possible">Your Order Has Been Sent And We Will Contact You As Soon As Possible</string>
+    <string name="please_sign_in_to_access_this_content">Please Sign In To Access Settings</string>
 </resources>

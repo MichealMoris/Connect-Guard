@@ -14,12 +14,19 @@
         android:background="@android:color/white"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="50dp">
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/close_sign_in_fragment"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="start|top"
+            android:src="@drawable/close" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/app_icon" />
 
         <EditText

@@ -24,15 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         constants.initFireBase();
-
-        if (!constants.getUId(this).equals("empty") )
-        {
-            startFragment(new MainFragment());
-            
-        }else
-        {
-            startFragment(new SignInFragment());
-        }
+        startFragment(new MainFragment());
 
 
     }

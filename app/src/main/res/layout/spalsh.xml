@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/app_icon" />
 
@@ -28,6 +28,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:indeterminate="false"
             android:indeterminateTint="@color/mainDarkGreen"
             android:progress="0"

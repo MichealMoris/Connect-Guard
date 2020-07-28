@@ -1,5 +1,6 @@
 package com.genius.connectguard;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.constants.constants;
@@ -22,12 +24,13 @@ import com.google.firebase.auth.AuthResult;
 public class SignInFragment extends Fragment {
 
     //
-    TextView createNewAccount;
-    TextView forget_password;
+    private TextView createNewAccount;
+    private TextView forget_password;
     private View view ;
     private Button loginBtn ;
     private EditText emailField ;
     private EditText passwordField ;
+    private ImageView closeSignInFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +38,15 @@ public class SignInFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_sign_in, null);
 
+        closeSignInFragment = view.findViewById(R.id.close_sign_in_fragment);
+        closeSignInFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setFragemnt(new MainFragment());
+
+            }
+        });
 
         createNewAccount = view.findViewById(R.id.createAccountText);
         createNewAccount.setOnClickListener(new View.OnClickListener() {

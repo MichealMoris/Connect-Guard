@@ -1,10 +1,14 @@
 package com.genius.connectguard;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +17,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +47,7 @@ public class CartFragment extends Fragment {
     private CartRecyclerViewAdapter adapter;
     private ElegantNumberButton elegantNumberButton;
     private TextView total;
+    private Button checkOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,10 +55,45 @@ public class CartFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        checkOut = view.findViewById(R.id.btn_checkOut);
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (!constants.getUId(getActivity()).equals("empty")){
+
+                            new CheckOutTask().execute();
+
+                        }else if (CartDatabaseInstance.getInstance(getActivity().getApplicationContext()).getAppDatabase().cartDao().getAllCartOrders().size() != 0){
+
+                            setFragment(new SignInFragment());
+
+                        }
+
+                    }
+                }).start();
+
+            }
+        });
+
         setRecyclerView(view);
         new TotalCounterTask().execute();
 
         return view;
+    }
+
+    private void setFragment(Fragment mainFragment) {
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.register_framelayout,mainFragment)
+                .disallowAddToBackStack()
+                .commit();
+
     }
 
     public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.CartViewHolder>{
@@ -216,6 +258,60 @@ public class CartFragment extends Fragment {
 
         }
     }
+
+    class CheckOutTask extends  AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            constants.getDatabaseReference().child("Orders").push();
+            final List<CartModel> cartModelList = CartDatabaseInstance.getInstance(getActivity().getApplicationContext()).getAppDatabase().cartDao().getAllCartOrders();
+            constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for (int i = 0; i < cartModelList.size(); i++){
+
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_user_image").setValue(snapshot.child("userImage").getValue().toString());
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_username").setValue(snapshot.child("name").getValue().toString());
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_address").setValue(snapshot.child("adress").getValue().toString());
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_phone_number").setValue(snapshot.child("mobile").getValue().toString());
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_product_name").setValue(cartModelList.get(i).getProduct_name());
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_product_amount").setValue(cartModelList.get(i).getProduct_amount());
+                        constants.getDatabaseReference().child("Orders").child(constants.getUId(getActivity()) + cartModelList.get(i).getProduct_name()).child("order_total_price").setValue(cartModelList.get(i).getOrder_total());
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+            if (cartModelList.size() != 0){
+
+                DoneOrderingDialog doneOrderingDialog = new DoneOrderingDialog();
+                doneOrderingDialog.show(getFragmentManager(), "doneOrderingDialog");
+
+            }
+
+            CartDatabaseInstance.getInstance(getActivity().getApplicationContext()).getAppDatabase().cartDao().deleteAll();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+                getFragmentManager().beginTransaction().detach(CartFragment.this).attach(CartFragment.this).commit();
+
+        }
+    }
+
+
 
 
 }

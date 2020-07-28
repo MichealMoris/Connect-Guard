@@ -42,16 +42,20 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="3"
+                android:shadowColor="#5E5E5E"
+                android:shadowDy="5"
+                android:shadowRadius="10"
                 android:text="Car Screen"
                 android:textColor="#000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:autoSizeTextType="uniform" />
 
 
             <TextView
                 android:id="@+id/post_modell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="5dp"
                 android:text="model" />
 
         </LinearLayout>
@@ -64,9 +68,14 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="3"
+            android:shadowColor="#5E5E5E"
+            android:shadowDy="5"
+            android:shadowRadius="10"
             android:text="hwawi fashe5 gedn"
-            android:textColor="#000" />
+            android:textColor="#000"
+            app:autoSizeTextType="uniform" />
 
 
         <LinearLayout

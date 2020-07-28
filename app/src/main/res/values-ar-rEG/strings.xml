@@ -42,8 +42,7 @@
     <string name="old_password">كلمة المرور القديمة</string>
     <string name="cancel">الغاء</string>
     <string name="add_to_card">اضف الي عربة التسوق</string>
-=======
-    <string name="app_name">Connect Guard</string>
+    =======
     <string name="userName">"محمد هاني "</string>
     <string name="carType">"لانسر بوما "</string>
     <string name="orderName">"حامي شاشة السيارة من سامسونج "</string>
@@ -54,5 +53,9 @@
     <string name="ProductPrice">100 L.E</string>
     <string name="or">أو</string>
     <string name="item_added_to_cart">تمت اضافته الي عربة التسوق</string>
+    <string name="add">أضف</string>
+    <string name="thank_you_for_ordering">شكراً لطلبك!</string>
+    <string name="your_order_has_been_sent_and_we_will_contact_you_as_soon_as_possible">تم ارسال طلبك و سوف نراسلك بأقرب وقت ممكن</string>
+    <string name="please_sign_in_to_access_this_content">برجاء تسجيل الدخول لتتمكن من فتح الاعدادات</string>
     >>>>>>> origin/master
 </resources>

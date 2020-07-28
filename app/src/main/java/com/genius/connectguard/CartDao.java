@@ -25,6 +25,9 @@ public abstract class CartDao {
     @Delete
     abstract void deleteCartItem(CartModel cartModel);
 
+    @Query("DELETE FROM cartmodel")
+    abstract void deleteAll();
+
     @Update
     abstract void updateCart(CartModel cartModel);
 

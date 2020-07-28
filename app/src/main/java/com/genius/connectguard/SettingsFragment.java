@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,31 +31,17 @@ public class SettingsFragment extends Fragment {
     private ImageView profile_image_in_settings;
     private TextView profile_name_in_settings;
     private TextView profile_email_in_settings;
-    private Spinner change_language;
+    private LinearLayout cover_in_settings;
+    private TextView sign_in_text_in_settings;
     private Button logOutBtn ;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-          view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-          change_language = view.findViewById(R.id.change_language);
-          change_language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-              @Override
-              public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
-
-                  constants.setLanguage(getActivity(), change_language.getSelectedItem().toString());
-
-
-              }
-
-              @Override
-              public void onNothingSelected(AdapterView<?> parent) {
-
-              }
-
-          });
+        view = inflater.inflate(R.layout.fragment_settings, container, false);
+        cover_in_settings = view.findViewById(R.id.cover_in_settings);
 
         accountSettings = view.findViewById(R.id.tv_accountSettings);
         accountSettings.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +51,26 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        setData(view);
+        if(!constants.getUId(getActivity()).equals("empty")){
+
+            setData(view);
+            cover_in_settings.setVisibility(View.GONE);
+
+        }else {
+
+            cover_in_settings.setVisibility(View.VISIBLE);
+            sign_in_text_in_settings = view.findViewById(R.id.sign_in_text_in_settings);
+            sign_in_text_in_settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    setFragemnt(new SignInFragment());
+
+                }
+            });
+
+        }
+
 
         return view;
     }
@@ -73,7 +79,7 @@ public class SettingsFragment extends Fragment {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-        fragmentTransaction.replace(R.id.settings_framlayout, fragment);
+        fragmentTransaction.replace(R.id.register_framelayout, fragment);
         fragmentTransaction.commit();
 
     }
@@ -109,6 +115,16 @@ public class SettingsFragment extends Fragment {
     {
         super.onActivityCreated(savedInstanceState);
         initViews();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
+        }
     }
 
     private void initViews()
