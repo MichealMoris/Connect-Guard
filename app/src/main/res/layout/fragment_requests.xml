@@ -6,25 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RequestsFragment">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/mainDarkGreen">
 
-        <ImageButton
-            android:id="@+id/ib_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:text="@string/requests"
-            android:textColor="#fff"
-            android:textSize="22sp" />
-    </androidx.appcompat.widget.Toolbar>
+    <ImageView
+        android:id="@+id/close_admins"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="start|top"
+        android:layout_margin="10dp"
+        android:src="@drawable/close" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

@@ -166,6 +166,8 @@ public class CartFragment extends Fragment {
             return cartModelList.size();
         }
 
+        public int getCartListSize(){return cartModelList.size();}
+
         public class CartViewHolder extends RecyclerView.ViewHolder{
 
             ImageView product_image;
@@ -253,13 +255,21 @@ public class CartFragment extends Fragment {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
 
-            total = getActivity().findViewById(R.id.tv_total);
-            total.setText(integer.toString()+" L.E");
+            try {
+
+                total = getActivity().findViewById(R.id.tv_total);
+                total.setText(integer.toString()+" L.E");
+
+            }catch (Exception e){
+
+
+
+            }
 
         }
     }
 
-    class CheckOutTask extends  AsyncTask<Void, Void, Void>{
+    class CheckOutTask extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -306,6 +316,7 @@ public class CartFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+                Toast.makeText(getContext(), String.valueOf(adapter.getCartListSize()), Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().detach(CartFragment.this).attach(CartFragment.this).commit();
 
         }

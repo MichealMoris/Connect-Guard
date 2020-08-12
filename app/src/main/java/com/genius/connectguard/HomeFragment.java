@@ -1,5 +1,7 @@
 package com.genius.connectguard;
 
+import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.hardware.camera2.params.RggbChannelVector;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,16 +24,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.genius.constants.constants;
 import com.genius.models.CartModel;
+import com.genius.models.CategoryModel;
 import com.genius.models.productModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -38,22 +45,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment
-{
+public class HomeFragment extends Fragment {
 
     private View view ;
-
+    private View view2 ;
     private RecyclerView recyclerView ;
     private SearchView searchView ;
     private List<productModel> postModels;
+    private List<CategoryModel> categoryModels = new ArrayList<>();
+    private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
     String key;
-    postsAdbtar adapter;
+    /*postsAdbtar adapter;*/
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_home,null);
+
+        recyclerView = view.findViewById(R.id.categories_recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+
+        addCategoriesToRecyclerView();
+
         return view;
     }
 
@@ -61,14 +77,47 @@ public class HomeFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-
-        initViews();
-        getPosts();
+        /*initViews();
+        getPosts();*/
 
     }
 
-    private void getPosts()
+    public void addCategoriesToRecyclerView(){
+
+        Query query = constants.getDatabaseReference().child("Categories");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                categoryModels.clear();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    CategoryModel categoryModel = new CategoryModel();
+                    categoryModel.setCategoryName(dataSnapshot.child("CategoryName").getValue().toString());
+                    categoryModel.setCategoryImage(dataSnapshot.child("CategoryImage").getValue().toString());
+                    categoryModel.setCategoryContentDescription(dataSnapshot.child("CategoryContentDescription").getValue().toString());
+                    categoryModels.add(categoryModel);
+
+                }
+
+                categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(getActivity(),categoryModels);
+                recyclerView.setAdapter(categoryRecyclerViewAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    /*private void getPosts()
     {
+
         constants.getDatabaseReference().child("products").addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -89,8 +138,6 @@ public class HomeFragment extends Fragment
 
                 adapter = new postsAdbtar(postModels);
                 recyclerView.setAdapter(adapter);
-
-               // recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
             }
 
@@ -135,7 +182,6 @@ public class HomeFragment extends Fragment
 
     }
 
-    //commit
    public class postsAdbtar extends RecyclerView.Adapter<postsAdbtar.vh>
     {
         List<productModel> postModelList;
@@ -367,7 +413,8 @@ public class HomeFragment extends Fragment
 
             }
         }
-    }
+    }*/
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

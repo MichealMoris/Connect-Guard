@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="#0B4C5C"
+            android:background="@color/mainDarkGreen"
             android:orientation="vertical">
 
             <FrameLayout
@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="15dp"
-            android:background="#0B4C5C" />
+            android:background="#CCC" />
 
         <TextView
             android:id="@+id/tv_accountSettings"
@@ -109,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="15dp"
-            android:background="#0B4C5C" />
+            android:background="#CCC" />
 
         <Button
             android:id="@+id/logOut_btn"
@@ -133,7 +133,8 @@
         android:layout_gravity="center"
         android:background="#FFFFFF"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textView8"

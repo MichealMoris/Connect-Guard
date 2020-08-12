@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Market</string>
+    <string name="app_name" translatable="false">Fixed</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -71,4 +71,25 @@
     <string name="thank_you_for_ordering">Thank You For Ordering!</string>
     <string name="your_order_has_been_sent_and_we_will_contact_you_as_soon_as_possible">Your Order Has Been Sent And We Will Contact You As Soon As Possible</string>
     <string name="please_sign_in_to_access_this_content">Please Sign In To Access Settings</string>
+    <string name="add_new_category">Add New Category</string>
+    <string name="orders">Orders</string>
+    <string name="internal_category">Add Subcategory</string>
+    <string name="add_new_product">Add New Product</string>
+    <string name="enter_category_name">Enter Category Name</string>
+    <string name="enter_category_content_discripsion">Enter Category Content Description</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="enter_subcategory_name">Enter Subcategory Name</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="search">Search</string>
+    <string name="loading">Loading...</string>
+    <string name="try_again">Try Again</string>
+    <string name="we_re_please_connect_to_internet_and_try_again">We\'re Sorry Please Connect To Internet And Try Again</string>
+    <string name="please_add_category">Please Add Category</string>
+    <string name="please_add_model" >Please Add Subcategory</string>
+    <string name="enter_product_stock">Enter Product Stock</string>
+    <string name="sold_out">Sold Out</string>
+    <string name="item_add_to_cart">" Added To Cart"</string>
+    <string name="total">Total:</string>
+    <string name="this_item_already_in_the_cart">This Item Already In The Cart</string>
 </resources>

@@ -47,7 +47,7 @@ public class SettingsFragment extends Fragment {
         accountSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragemnt(new AccountSettingFragment());
+                setFragemnt(new AccountSettingFragment(), R.id.settings_framlayout);
             }
         });
 
@@ -64,7 +64,7 @@ public class SettingsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    setFragemnt(new SignInFragment());
+                    setFragemnt(new SignInFragment(), R.id.register_framelayout);
 
                 }
             });
@@ -75,11 +75,11 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    private void setFragemnt(Fragment fragment) {
+    private void setFragemnt(Fragment fragment, int repTo) {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-        fragmentTransaction.replace(R.id.register_framelayout, fragment);
+        fragmentTransaction.replace(repTo, fragment);
         fragmentTransaction.commit();
 
     }

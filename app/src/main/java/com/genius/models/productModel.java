@@ -1,63 +1,24 @@
 package com.genius.models;
 
-import android.net.Uri;
-import android.widget.EditText;
-
 public class productModel
 {
 
-    private  String productName ;
-    private  String productModel ;
-    private  String productDiscreption ;
-    private  String productPrice ;
     private  String productImage ;
-    private String uId ;
-    private  int type ;
-
-
-    public productModel(String productName, String productModel, String productDiscreption, String productPrice, String productImage, String uId, int type) {
-        this.productName = productName;
-        this.productModel = productModel;
-        this.productDiscreption = productDiscreption;
-        this.productPrice = productPrice;
-        this.productImage = productImage;
-        this.uId = uId;
-        this.type = type;
-    }
+    private  String productName ;
+    private  String productDescription ;
+    private  String productPrice ;
+    private int productStock ;
+    private boolean isSoldOut = false;
 
     public productModel() {
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
+    public productModel(String productImage, String productName, String productDescription, String productPrice, int productStock) {
+        this.productImage = productImage;
         this.productName = productName;
-    }
-
-    public String getProductModel() {
-        return productModel;
-    }
-
-    public void setProductModel(String productModel) {
-        this.productModel = productModel;
-    }
-
-    public String getProductDiscreption() {
-        return productDiscreption;
-    }
-
-    public void setProductDiscreption(String productDiscreption) {
-        this.productDiscreption = productDiscreption;
-    }
-
-    public String getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(String productPrice) {
+        this.productDescription = productDescription;
         this.productPrice = productPrice;
+        this.productStock = productStock;
     }
 
     public String getProductImage() {
@@ -68,19 +29,43 @@ public class productModel
         this.productImage = productImage;
     }
 
-    public int getType() {
-        return type;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getuId() {
-        return uId;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setuId(String uId) {
-        this.uId = uId;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public int getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(int productStock) {
+        this.productStock = productStock;
+    }
+
+    public boolean isSoldOut() {
+        return isSoldOut;
+    }
+
+    public void setSoldOut(boolean soldOut) {
+        isSoldOut = soldOut;
     }
 }

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".AddSubCategoryFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/close_admins"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|top"
+                android:layout_margin="10dp"
+                android:src="@drawable/close" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="200dp"
+                    android:layout_height="140dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_image_rectangle" />
+
+                <ImageView
+                    android:id="@+id/new_sub_category_image"
+                    android:layout_width="190dp"
+                    android:layout_height="130dp"
+                    android:layout_gravity="center" />
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="190dp"
+                    android:layout_height="130dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shaded_image_rectangle" />
+
+                <ImageView
+                    android:id="@+id/pick_sub_category_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/add_photo_icon" />
+
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/sub_category_name"
+                android:layout_width="220dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background_pink"
+                android:gravity="center"
+                android:hint="@string/enter_subcategory_name" />
+
+            <Spinner
+                android:id="@+id/choose_category_spinner"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="220dp"
+                android:layout_height="55dp"
+                android:theme="@style/ThemeSpinner" />
+
+            <Button
+                android:id="@+id/add_new_sub_category"
+                android:layout_width="230dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background"
+                android:text="@string/add"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/add_subcategory_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4D252525"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,14 +1,20 @@
 package com.genius.connectguard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.genius.models.productModel;
@@ -27,39 +33,309 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
 public class AdminAddProduct extends Fragment
 {
     private View view ;
-    private EditText roomName ;
-    private EditText productModel ;
-    private EditText productDescription ;
-    private EditText productPrice ;
-    private ImageView postImage ;
-    private Uri selectedPostImage;
+    private ImageView select_new_product_image;
+    private ImageView selected_product_image;
+    private EditText product_name;
+    private EditText product_description;
+    private EditText product_price;
+    private EditText product_stock;
+    private ImageView close;
+    private Uri selectedProductImage;
     private Button addBtn ;
+    private Spinner selectCategorySpinner;
+    private Spinner selectSubcategorySpinner;
+    private LinearLayout AddProductProgress;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_admin_add_product,null);
+
+        selected_product_image = view.findViewById(R.id.new_product_image);
+        product_name = view.findViewById(R.id.enter_product_name);
+        product_description = view.findViewById(R.id.enter_product_description);
+        product_price = view.findViewById(R.id.enter_product_price);
+        product_stock = view.findViewById(R.id.enter_product_stock);
+
+        addCategoriesToCategoriesSpinner(view);
+        selectCategorySpinner = (Spinner) view.findViewById(R.id.select_category_spinner);
+        selectCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+                addSubcategoriesToSubcategoriesSpinner(view, selectCategorySpinner.getSelectedItem().toString());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        select_new_product_image = view.findViewById(R.id.pick_product_image);
+        select_new_product_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CropImage.activity().start(requireContext(), AdminAddProduct.this);
+
+            }
+        });
+
+        close = view.findViewById(R.id.close_admins);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
+                fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
+
+        addBtn = view.findViewById(R.id.add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (product_name.getText().toString().isEmpty() || product_description.getText().toString().isEmpty() || product_price.getText().toString().isEmpty() || product_stock.getText().toString().isEmpty()){
+
+                    Toast.makeText(view.getContext(), "Please Enter All The Data", Toast.LENGTH_SHORT).show();
+
+                }else if (!product_name.getText().toString().isEmpty() || !product_description.getText().toString().isEmpty() || !product_price.getText().toString().isEmpty() || !product_stock.getText().toString().isEmpty()){
+
+                    AddProductProgress = view.findViewById(R.id.add_product_progress);
+                    AddProductProgress.setVisibility(View.VISIBLE);
+                    if (selectedProductImage != null){
+
+                        final StorageReference storageReference = constants.getStorageReference().child("product_images/" + selectedProductImage.getLastPathSegment());
+                        UploadTask uploadTask = storageReference.putFile(selectedProductImage);
+                        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+                        {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
+                            {
+                                return storageReference.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task)
+                            {
+                                if (task.isSuccessful())
+                                {
+                                    Uri downloadUri = task.getResult();
+                                    String imageUrl = downloadUri.toString();
+                                    addNewProduct(view, selectCategorySpinner.getSelectedItem().toString(), selectSubcategorySpinner.getSelectedItem().toString(), imageUrl, product_name.getText().toString(), product_description.getText().toString(), product_price.getText().toString(), product_stock.getText().toString());
+
+                                }
+                            }
+                        });
+
+                    }
+
+
+                }
+
+            }
+        });
+
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
 
-        constants.initProgress(requireContext(), "please wait");
-        initViews();
+    public void addCategoriesToCategoriesSpinner(final View view){
+
+        final List<String> categoriesSpinnerArray = new ArrayList<String>();
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, categoriesSpinnerArray);
+
+        constants.getDatabaseReference().child("Categories").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    categoriesSpinnerArray.add(dataSnapshot.getKey());
+
+                }
+
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                selectCategorySpinner = (Spinner) view.findViewById(R.id.select_category_spinner);
+                if (categoriesSpinnerArray.size() == 0){
+
+                    categoriesSpinnerArray.add(0, getResources().getString(R.string.please_add_category));
+
+                }else if (categoriesSpinnerArray.size() > 0){
+
+                    if (isAdded() || isVisible()){
+
+                        categoriesSpinnerArray.remove(getResources().getString(R.string.please_add_category));
+
+                    }
+
+                }
+                selectCategorySpinner.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
+    public void addSubcategoriesToSubcategoriesSpinner(final View view, final String mainCategory){
+
+        final List<String> subcategoriesSpinnerArray = new ArrayList<String>();
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, subcategoriesSpinnerArray);
+
+        constants.getDatabaseReference().child("Categories").child(mainCategory).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                subcategoriesSpinnerArray.clear();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+
+                        subcategoriesSpinnerArray.clear();
+                        subcategoriesSpinnerArray.add(dataSnapshot.child("modelName").getValue().toString());
+
+                    }
 
 
+                }
+
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                selectSubcategorySpinner = (Spinner) view.findViewById(R.id.select_model_spinner);
+                if (subcategoriesSpinnerArray.size() == 0){
+
+                    subcategoriesSpinnerArray.add(0, getResources().getString(R.string.please_add_category));
+
+                }else if (subcategoriesSpinnerArray.size() > 0){
+
+                    if (isAdded() || isVisible()){
+
+                        subcategoriesSpinnerArray.remove(getResources().getString(R.string.please_add_category));
+
+                    }
+
+                }
+                selectSubcategorySpinner.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public void addNewProduct(View view, String mainCategoryName, String mainSubcategoryName, String productImage, String productName, String productDescription, String productPrice, String productStock){
+
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).push();
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productImage").setValue(productImage);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productName").setValue(productName);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productDescription").setValue(productDescription);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productPrice").setValue(productPrice);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productStock").setValue(productStock);
+        restartApp(view.getContext());
+
+    }
+
+    /*private void saveNewRoom(final String name , final String modell , final String description , final String price , final String imageUri,final String uId , final int type)
+    {
+        constants.getDatabaseReference().child("Users").child(constants.getUId(requireActivity())).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                final String roomId = constants.getDatabaseReference().child("products").push().getKey();
+
+                userModel userModel = dataSnapshot.getValue(userModel.class);
+                productModel model = new productModel(name,modell,description , price , imageUri ,userModel.getuId(), type );
+
+                if (roomId != null)
+                {
+
+                    constants.getDatabaseReference().child("products").child(roomId).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task)
+                        {
+                            constants.dissmisProgress();
+
+                            constants.replaceFragment(AdminAddProduct.this,new MainFragment(),true);
+
+
+                        }
+                    });
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void uploadImage(final String name, final String modell, final String description, final String price, final Uri selectedPostImage, final int type)
+    {
+        // set file place into storage and file name
+        final StorageReference userImageRef = constants.getStorageReference().child("posts_images/"+selectedPostImage.getLastPathSegment());
+
+        // put file into upload task
+        UploadTask uploadTask = userImageRef.putFile(selectedPostImage);
+
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+        {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
+            {
+                return userImageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task)
+            {
+                if (task.isSuccessful())
+                {
+                    Uri downloadUri = task.getResult();
+                    String imageUrl = downloadUri.toString();
+
+                    String uId = task.getResult().toString();
+
+                    saveNewRoom(name,modell , description , price , imageUrl , uId , type );
+
+                }
+            }
+        });
+    }
 
     private void initViews()
     {
@@ -106,118 +382,42 @@ public class AdminAddProduct extends Fragment
 
 
                 }else
-                    {
-
-                        uploadImage(name , model , description , price , selectedPostImage  , 1);
-                    }
-
-
-            }
-        });
-
-
-    }
-
-    private void uploadImage(final String name, final String modell, final String description, final String price, final Uri selectedPostImage, final int type)
-    {
-        // set file place into storage and file name
-        final StorageReference userImageRef = constants.getStorageReference().child("posts_images/"+selectedPostImage.getLastPathSegment());
-
-        // put file into upload task
-        UploadTask uploadTask = userImageRef.putFile(selectedPostImage);
-
-        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
-        {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
-            {
-                return userImageRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>()
-        {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task)
-            {
-                if (task.isSuccessful())
-                {
-                    Uri downloadUri = task.getResult();
-                    String imageUrl = downloadUri.toString();
-
-                    String uId = task.getResult().toString();
-
-                    saveNewRoom(name,modell , description , price , imageUrl , uId , type );
-
-                }
-            }
-        });
-    }
-
-
-
-    private void saveNewRoom(final String name , final String modell , final String description , final String price , final String imageUri,final String uId , final int type)
-    {
-        constants.getDatabaseReference().child("Users").child(constants.getUId(requireActivity())).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                final String roomId = constants.getDatabaseReference().child("products").push().getKey();
-
-                userModel userModel = dataSnapshot.getValue(userModel.class);
-                productModel model = new productModel(name,modell,description , price , imageUri ,userModel.getuId(), type );
-
-                if (roomId != null)
                 {
 
-                    constants.getDatabaseReference().child("products").child(roomId).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task)
-                        {
-                            constants.dissmisProgress();
-
-                            constants.replaceFragment(AdminAddProduct.this,new MainFragment(),true);
-
-
-                        }
-                    });
+                    uploadImage(name , model , description , price , selectedPostImage  , 1);
                 }
 
 
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-    }
+
+
+    }*/
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-        {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            if (resultCode == RESULT_OK)
-            {
-                selectedPostImage = result.getUri();
+            if (resultCode == RESULT_OK){
 
-                postImage.setVisibility(View.VISIBLE);
+                selectedProductImage = result.getUri();
+                Picasso.get().load(selectedProductImage).into(selected_product_image);
 
-                Picasso
-                        .get()
-                        .load(selectedPostImage)
-                        .into(postImage);
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE)
-            {
-                Exception error = result.getError();
-                constants.showToast(requireContext(), error.getMessage());
             }
+
         }
+
+    }
+
+    private void restartApp(Context context) {
+
+        Intent intent = new Intent(context, RegisterActivity.class);
+        getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
+        startActivity(intent);
     }
 
 }

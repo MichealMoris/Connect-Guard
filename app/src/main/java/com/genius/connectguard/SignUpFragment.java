@@ -93,7 +93,6 @@ public class SignUpFragment extends Fragment {
         passwordField = view.findViewById(R.id.register_password_field);
         mobileField = view.findViewById(R.id.register_mobile_field);
         adressField = view.findViewById(R.id.register_adress_field);
-        carModel = view.findViewById(R.id.register_model_field);
         circleImageView = view.findViewById(R.id.user_picked_image);
         userRegisterChooseLang = view.findViewById(R.id.userRegisterChooseLang);
         registerBtn = view.findViewById(R.id.register_register_btn);
@@ -193,15 +192,15 @@ public class SignUpFragment extends Fragment {
                     Uri downloadUri = task.getResult();
                     String imageUrl = downloadUri.toString();
 
-                    saveNewUser(name,email,password,mobile,adress,model,uId,imageUrl, language);
+                    saveNewUser(name,email,password,mobile,adress,uId,imageUrl, language);
                 }
             }
         });
     }
 
-    private void saveNewUser(String name, String email, String password , String mobile, String adress,String model, String uId, String imageUrl, String language)
+    private void saveNewUser(String name, String email, String password , String mobile, String adress, String uId, String imageUrl, String language)
     {
-        userModel userModel = new userModel(name , email , password , mobile , adress , model , imageUrl , uId, language);
+        userModel userModel = new userModel(name , email , password , mobile , adress , imageUrl , uId, language);
 
         constants.getDatabaseReference().child("Users").child(uId).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

@@ -7,18 +7,16 @@ public class userModel
    private String password ;
     private String mobile ;
     private String adress ;
-    private String carModel ;
     private String userImage ;
     private String uId ;
     private String language;
 
-    public userModel(String name, String email, String password, String mobile, String adress, String carModel, String userImage, String uId, String language) {
+    public userModel(String name, String email, String password, String mobile, String adress, String userImage, String uId, String language) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.mobile = mobile;
         this.adress = adress;
-        this.carModel = carModel;
         this.userImage = userImage;
         this.uId = uId;
         this.language = language;
@@ -68,14 +66,6 @@ public class userModel
 
     public void setAdress(String adress) {
         this.adress = adress;
-    }
-
-    public String getCarModel() {
-        return carModel;
-    }
-
-    public void setCarModel(String carModel) {
-        this.carModel = carModel;
     }
 
     public String getUserImage() {

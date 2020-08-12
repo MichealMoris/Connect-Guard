@@ -5,7 +5,7 @@
     android:id="@+id/home_framlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eee"
+    android:background="#FAFAFA"
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
@@ -16,48 +16,54 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="#fff"
-            android:gravity="center_horizontal|top"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            app:cardElevation="3dp"
+            app:contentPadding="10dp">
 
-            <ImageButton
-                android:id="@+id/ib_logo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/app_icon" />
-
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
-                android:elevation="5dp"
-                app:cardBackgroundColor="#eee"
-                app:cardCornerRadius="15dp">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <SearchView
-                    android:id="@+id/search_view"
+                <ImageButton
+                    android:id="@+id/ib_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/app_icon" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="#eee"
+                    app:cardCornerRadius="15dp">
 
-            </androidx.cardview.widget.CardView>
+                    <SearchView
+                        android:id="@+id/search_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
-        </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/posts_recycler"
+            android:id="@+id/categories_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_post" />
+            tools:listitem="@layout/category_item" />
     </LinearLayout>
 
 

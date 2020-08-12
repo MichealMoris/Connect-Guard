@@ -9,7 +9,7 @@
 
     <style name="ThemeSpinner">
         <!-- Default color for the dropdown arrow and line -->
-        <item name="colorControlNormal">#0B4C5C</item>
+        <item name="colorControlNormal">@color/mainDarkGreen</item>
     </style>
 
     <!-- Admin Main -->
@@ -25,7 +25,7 @@
     </style>
     <style name="AdminAddET">
 
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">280dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginStart">50dp</item>

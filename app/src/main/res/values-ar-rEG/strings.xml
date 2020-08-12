@@ -57,5 +57,26 @@
     <string name="thank_you_for_ordering">شكراً لطلبك!</string>
     <string name="your_order_has_been_sent_and_we_will_contact_you_as_soon_as_possible">تم ارسال طلبك و سوف نراسلك بأقرب وقت ممكن</string>
     <string name="please_sign_in_to_access_this_content">برجاء تسجيل الدخول لتتمكن من فتح الاعدادات</string>
+    <string name="add_new_category">أضف فئة جديدة</string>
+    <string name="orders">الطلبات</string>
+    <string name="internal_category">أضف فئة فرعية</string>
+    <string name="add_new_product">أضف منتج</string>
+    <string name="enter_category_name">ادخل اسم الفئة</string>
+    <string name="enter_category_content_discripsion">ادخل وصف لمحتوي الفئة</string>
+    <string name="edit_product">عدل المنتج</string>
+    <string name="enter_subcategory_name">ادخل اسم الفئة الفرعية</string>
+    <string name="edit">عدل</string>
+    <string name="delete">امسح</string>
+    <string name="search">ابحث</string>
+    <string name="loading">تحميل...</string>
+    <string name="we_re_please_connect_to_internet_and_try_again">برجاء الاتصال بالانترنت</string>
+    <string name="try_again">حاول مجدداً</string>
+    <string name="please_add_category">برجاء اضافة فئة</string>
+    <string name="please_add_model">برجاء اضافة فئة فرعية</string>
+    <string name="enter_product_stock">ادخل مخزون المنتج</string>
+    <string name="sold_out">بيعت كلها</string>
+    <string name="item_add_to_cart">" تم أضافته الي عربة التسوق"</string>
+    <string name="total">"مجموع الحساب: "</string>
+    <string name="this_item_already_in_the_cart">هذا المنتج مضاف بالفعل في عربة التسوق</string>
     >>>>>>> origin/master
 </resources>
