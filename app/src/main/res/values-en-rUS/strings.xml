@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Fixed</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -97,10 +98,7 @@
     <string name="amount">Amount:</string>
     <string name="order_number">Order Number:</string>
     <string name="order_model">Order Model:</string>
-    <string name="delete_product">Delete Product</string>
+    <string name="delete_product">Delete  Product</string>
     <string name="please_add_subcategory">Please Add Subcategory</string>
     <string name="please_add_product">Please Add Product</string>
-    <string name="to_change_app_language_please_change_your_phone_language_or_update_your_android_version">To Change App Language Please Change Your Phone Language Or Update Your Android Version</string>
-    <string name="please_enter_full_data">Please Enter Full Data</string>
-    <string name="reset_password">Reset Password</string>
 </resources>

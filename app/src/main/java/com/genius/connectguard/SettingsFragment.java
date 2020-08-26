@@ -1,6 +1,12 @@
 package com.genius.connectguard;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +15,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,7 +31,12 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Locale;
+
+import io.paperdb.Paper;
 
 public class SettingsFragment extends Fragment {
 
@@ -34,6 +48,10 @@ public class SettingsFragment extends Fragment {
     private LinearLayout cover_in_settings;
     private TextView sign_in_text_in_settings;
     private Button logOutBtn ;
+    private RadioButton englishLanguage;
+    private RadioButton arabicLanguage;
+    private RadioGroup languagesGroup;
+    private TextView lowSdkText;
 
 
     @Nullable
@@ -41,6 +59,66 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        final SharedPreferences preferences = getActivity().getSharedPreferences("appLanguage", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+
+        if (preferences.getString("langCode", "en").equals("ar")){
+
+            view.setRotationY(180f);
+
+        }
+
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+
+            languagesGroup = view.findViewById(R.id.languageGroup);
+            lowSdkText = view.findViewById(R.id.low_sdk_text);
+            languagesGroup.setVisibility(View.GONE);
+            lowSdkText.setVisibility(View.VISIBLE);
+
+        }else{
+
+            languagesGroup = view.findViewById(R.id.languageGroup);
+            lowSdkText = view.findViewById(R.id.low_sdk_text);
+            languagesGroup.setVisibility(View.VISIBLE);
+            lowSdkText.setVisibility(View.GONE);
+
+        }
+
+        englishLanguage = view.findViewById(R.id.english_radio_button);
+        englishLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                editor.putString("langCode", "en");
+                editor.apply();
+                restartApp(view.getContext());
+
+            }
+        });
+
+        arabicLanguage = view.findViewById(R.id.arabic_radio_button);
+        arabicLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                editor.putString("langCode", "ar");
+                editor.apply();
+                restartApp(view.getContext());
+
+            }
+        });
+
+        if (preferences.getString("langCode", "en").equals("en")){
+
+            englishLanguage.setChecked(true);
+
+        }else if (preferences.getString("langCode", "en").equals("ar")){
+
+            arabicLanguage.setChecked(true);
+
+        }
+
         cover_in_settings = view.findViewById(R.id.cover_in_settings);
 
         accountSettings = view.findViewById(R.id.tv_accountSettings);
@@ -74,6 +152,7 @@ public class SettingsFragment extends Fragment {
 
         return view;
     }
+
 
     private void setFragemnt(Fragment fragment, int repTo) {
 
@@ -143,4 +222,13 @@ public class SettingsFragment extends Fragment {
 
 
     }
+
+    private void restartApp(Context context) {
+
+        Intent intent = new Intent(context, RegisterActivity.class);
+        getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
 }

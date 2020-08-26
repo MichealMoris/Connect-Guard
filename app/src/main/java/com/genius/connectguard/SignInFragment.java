@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -30,7 +31,7 @@ public class SignInFragment extends Fragment {
     private Button loginBtn ;
     private EditText emailField ;
     private EditText passwordField ;
-    private ImageView closeSignInFragment;
+    private Toolbar signInToolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,8 +39,8 @@ public class SignInFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_sign_in, null);
 
-        closeSignInFragment = view.findViewById(R.id.close_sign_in_fragment);
-        closeSignInFragment.setOnClickListener(new View.OnClickListener() {
+        signInToolbar = view.findViewById(R.id.sign_toolbar);
+        signInToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

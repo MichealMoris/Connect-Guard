@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_framlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,12 +32,20 @@
                     android:layout_gravity="center"
                     android:background="@drawable/border_image_circle" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar4"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image_in_settings"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/profile" />
+                    android:src="@drawable/profile"
+                    tools:visibility="visible" />
 
             </FrameLayout>
 
@@ -65,26 +74,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
                 android:text="@string/language"
                 android:textColor="#000"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/change_language"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="150dp"
+            <TextView
+                android:id="@+id/low_sdk_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:entries="@array/language_spinner"
-                android:theme="@style/ThemeSpinner" />
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="@string/to_change_app_language_please_change_your_phone_language_or_update_your_android_version"
+                android:textColor="@color/mainDarkGreen"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:autoSizeTextType="uniform" />
+
+            <RadioGroup
+                android:id="@+id/languageGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/english_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/mainDarkGreen"
+                    android:text="English" />
+
+                <RadioButton
+                    android:id="@+id/arabic_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/mainDarkGreen"
+                    android:text="اللغة العربية" />
+            </RadioGroup>
 
         </LinearLayout>
 
@@ -96,7 +131,7 @@
 
         <TextView
             android:id="@+id/tv_accountSettings"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="10dp"

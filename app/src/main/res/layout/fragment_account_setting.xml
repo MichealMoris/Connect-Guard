@@ -9,7 +9,7 @@
     tools:context=".AccountSettingFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
@@ -26,30 +26,6 @@
             android:gravity="center"
             android:hint="@string/full_name"
             android:inputType="textPersonName"
-            android:textColorHint="@color/mainHintColor" />
-
-        <EditText
-            android:id="@+id/change_user_password_old_password"
-            android:layout_width="217dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_background_pink"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/old_password"
-            android:inputType="textPassword"
-            android:textColorHint="@color/mainHintColor" />
-
-        <EditText
-            android:id="@+id/change_user_password_new_password"
-            android:layout_width="217dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_background_pink"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/password"
-            android:inputType="textPassword"
             android:textColorHint="@color/mainHintColor" />
 
         <EditText
@@ -75,6 +51,46 @@
             android:hint="@string/phone_number"
             android:inputType="phone"
             android:textColorHint="@color/mainHintColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="50dp"
+                android:layout_height="1.5dp"
+                android:background="#606060" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/or"
+                android:textColor="@color/mainDarkGreen"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="50dp"
+                android:layout_height="1.5dp"
+                android:background="#4A4A4A" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/reset_password_in_account_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/reset_password"
+            android:textColor="@color/mainPink"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -21,10 +21,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.google.android.gms.dynamic.IFragmentWrapper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,13 +44,13 @@ public class AccountSettingFragment extends Fragment {
     private Uri userImage;
     private String spareUserImage;
     private EditText name_in_account_setting;
-    private EditText password_in_account_setting;
-    private EditText old_password_in_account_setting;
+    private TextView reset_password_in_account_setting;
     private EditText address_in_account_setting;
     private EditText phone_number_in_account_setting;
     private Button done_button_in_account_setting;
     private Button cancel_button;
     private boolean wrong;
+    private String email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,13 +60,12 @@ public class AccountSettingFragment extends Fragment {
         name_in_account_setting = view.findViewById(R.id.change_user_name);
         address_in_account_setting = view.findViewById(R.id.change_user_address);
         phone_number_in_account_setting = view.findViewById(R.id.change_user_phone_number);
-        password_in_account_setting = view.findViewById(R.id.change_user_password_new_password);
-        old_password_in_account_setting = view.findViewById(R.id.change_user_password_old_password);
 
         constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                email = snapshot.child("email").getValue().toString();
                 name_in_account_setting.setText(snapshot.child("name").getValue().toString());
                 address_in_account_setting.setText(snapshot.child("adress").getValue().toString());
                 phone_number_in_account_setting.setText(snapshot.child("mobile").getValue().toString());
@@ -83,11 +86,11 @@ public class AccountSettingFragment extends Fragment {
 
                 if (userImage == null){
 
-                    changeData(view,spareUserImage,name_in_account_setting.getText().toString(), address_in_account_setting.getText().toString(), phone_number_in_account_setting.getText().toString(), old_password_in_account_setting.getText().toString(),password_in_account_setting.getText().toString(), spareUserImage);
+                    changeData(view,spareUserImage,name_in_account_setting.getText().toString(), address_in_account_setting.getText().toString(), phone_number_in_account_setting.getText().toString(), spareUserImage);
 
                 }else {
 
-                    changeData(view,userImage.toString(),name_in_account_setting.getText().toString(), address_in_account_setting.getText().toString(), phone_number_in_account_setting.getText().toString(), old_password_in_account_setting.getText().toString(),password_in_account_setting.getText().toString(), spareUserImage);
+                    changeData(view,userImage.toString(),name_in_account_setting.getText().toString(), address_in_account_setting.getText().toString(), phone_number_in_account_setting.getText().toString(),  spareUserImage);
 
                 }
 
@@ -105,6 +108,27 @@ public class AccountSettingFragment extends Fragment {
             }
         });
 
+        reset_password_in_account_setting = view.findViewById(R.id.reset_password_in_account_settings);
+        reset_password_in_account_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+
+                                    constants.getAuth().signOut();
+                                    constants.saveUId(requireActivity(),"empty");
+                                    constants.replaceFragment(AccountSettingFragment.this,new EmailSentFragment(),false);
+
+                                }
+                            }
+                        });
+            }
+        });
+
         return view;
     }
 
@@ -118,28 +142,12 @@ public class AccountSettingFragment extends Fragment {
 
     }
 
-    private void changeData(final View view, final String image, final String name, final String address, final String mobile, final String old_password, final String new_password, final String spare_user_image){
+    private void changeData(final View view, final String image, final String name, final String address, final String mobile, final String spare_user_image){
 
         constants.getDatabaseReference().child("Users").child(constants.getUId(getActivity())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if (old_password.equals(snapshot.child("password").getValue().toString())) {
-
-                        if (new_password.isEmpty()) {
-
-                            snapshot.getRef().child("password").setValue(snapshot.child("password").getValue().toString());
-
-                        } else {
-
-                            snapshot.getRef().child("password").setValue(new_password);
-
-                        }
-                    }else if (!old_password.isEmpty() || !old_password.equals(snapshot.child("password").getValue().toString())){
-
-                        wrong = true;
-
-                    }
                 snapshot.getRef().child("userImage").setValue(image);
                 snapshot.getRef().child("name").setValue(name);
                 snapshot.getRef().child("adress").setValue(address);
@@ -164,6 +172,7 @@ public class AccountSettingFragment extends Fragment {
         Intent intent = new Intent(context, RegisterActivity.class);
         getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
         startActivity(intent);
+        getActivity().finish();
     }
 
 }

@@ -1,6 +1,8 @@
 package com.genius.connectguard;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.hardware.camera2.params.RggbChannelVector;
 import android.os.AsyncTask;
@@ -62,6 +64,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_home,null);
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("appLanguage", Context.MODE_PRIVATE);
+
+        if (preferences.getString("langCode", "en").equals("ar")){
+
+            view.setRotationY(180f);
+
+        }
 
         recyclerView = view.findViewById(R.id.categories_recyclerview);
         recyclerView.setHasFixedSize(true);

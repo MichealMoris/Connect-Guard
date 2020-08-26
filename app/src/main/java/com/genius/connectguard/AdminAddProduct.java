@@ -2,6 +2,7 @@ package com.genius.connectguard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,8 +18,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.genius.constants.constants;
-import com.genius.models.productModel;
-import com.genius.models.userModel;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,10 +31,12 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -49,7 +50,7 @@ public class AdminAddProduct extends Fragment
     private EditText product_description;
     private EditText product_price;
     private EditText product_stock;
-    private ImageView close;
+    private Toolbar addNewProductToolbar;
     private Uri selectedProductImage;
     private Button addBtn ;
     private Spinner selectCategorySpinner;
@@ -94,8 +95,9 @@ public class AdminAddProduct extends Fragment
             }
         });
 
-        close = view.findViewById(R.id.close_admins);
-        close.setOnClickListener(new View.OnClickListener() {
+
+        addNewProductToolbar = view.findViewById(R.id.add_new_product_toolbar);
+        addNewProductToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -106,7 +108,6 @@ public class AdminAddProduct extends Fragment
 
             }
         });
-
 
 
         addBtn = view.findViewById(R.id.add_btn);
@@ -124,7 +125,7 @@ public class AdminAddProduct extends Fragment
                     AddProductProgress.setVisibility(View.VISIBLE);
                     if (selectedProductImage != null){
 
-                        final StorageReference storageReference = constants.getStorageReference().child("product_images/" + selectedProductImage.getLastPathSegment());
+                        final StorageReference storageReference = constants.getStorageReference().child("product_images/" + product_name.getText().toString());
                         UploadTask uploadTask = storageReference.putFile(selectedProductImage);
                         uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
                         {
@@ -142,7 +143,7 @@ public class AdminAddProduct extends Fragment
                                 {
                                     Uri downloadUri = task.getResult();
                                     String imageUrl = downloadUri.toString();
-                                    addNewProduct(view, selectCategorySpinner.getSelectedItem().toString(), selectSubcategorySpinner.getSelectedItem().toString(), imageUrl, product_name.getText().toString(), product_description.getText().toString(), product_price.getText().toString(), product_stock.getText().toString());
+                                    addNewProduct(view, selectCategorySpinner.getSelectedItem().toString(), selectSubcategorySpinner.getSelectedItem().toString(), imageUrl, product_name.getText().toString(), product_name.getText().toString(), product_description.getText().toString(), product_price.getText().toString(), product_stock.getText().toString());
 
                                 }
                             }
@@ -205,62 +206,70 @@ public class AdminAddProduct extends Fragment
 
     public void addSubcategoriesToSubcategoriesSpinner(final View view, final String mainCategory){
 
-        final List<String> subcategoriesSpinnerArray = new ArrayList<String>();
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, subcategoriesSpinnerArray);
+        if (!mainCategory.equals(getResources().getString(R.string.please_add_category))){
 
-        constants.getDatabaseReference().child("Categories").child(mainCategory).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            final List<String> subcategoriesSpinnerArray = new ArrayList<String>();
 
-                subcategoriesSpinnerArray.clear();
+            constants.getDatabaseReference().child("Categories").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    subcategoriesSpinnerArray.clear();
 
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    for (DataSnapshot dataSnapshot : snapshot.child(mainCategory).getChildren()){
 
-                        subcategoriesSpinnerArray.clear();
-                        subcategoriesSpinnerArray.add(dataSnapshot.child("modelName").getValue().toString());
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
 
-                    }
+                            subcategoriesSpinnerArray.add(dataSnapshot.child("modelName").getValue(String.class));
 
-
-                }
-
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                selectSubcategorySpinner = (Spinner) view.findViewById(R.id.select_model_spinner);
-                if (subcategoriesSpinnerArray.size() == 0){
-
-                    subcategoriesSpinnerArray.add(0, getResources().getString(R.string.please_add_category));
-
-                }else if (subcategoriesSpinnerArray.size() > 0){
-
-                    if (isAdded() || isVisible()){
-
-                        subcategoriesSpinnerArray.remove(getResources().getString(R.string.please_add_category));
+                        }
 
                     }
 
+                    LinkedHashSet<String> hashSet = new LinkedHashSet<String>(subcategoriesSpinnerArray);
+
+                    ArrayList<String> spinnerWithoutDuplicates = new ArrayList<>(hashSet);
+
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, spinnerWithoutDuplicates);
+
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    selectSubcategorySpinner = (Spinner) view.findViewById(R.id.select_model_spinner);
+                    if (spinnerWithoutDuplicates.size() == 0){
+
+                        spinnerWithoutDuplicates.add(0, getResources().getString(R.string.please_add_subcategory));
+
+                    }else if (spinnerWithoutDuplicates.size() > 0){
+
+                        if (isAdded() || isVisible()){
+
+                            spinnerWithoutDuplicates.remove(getResources().getString(R.string.please_add_subcategory));
+
+                        }
+
+                    }
+                    selectSubcategorySpinner.setAdapter(adapter);
+
                 }
-                selectSubcategorySpinner.setAdapter(adapter);
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
-            }
-        });
+        }
 
     }
 
-    public void addNewProduct(View view, String mainCategoryName, String mainSubcategoryName, String productImage, String productName, String productDescription, String productPrice, String productStock){
+    public void addNewProduct(View view, String mainCategoryName, String mainSubcategoryName, String productImage, String standardProductName,String productName, String productDescription, String productPrice, String productStock){
 
-        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).push();
-        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productImage").setValue(productImage);
-        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productName").setValue(productName);
-        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productDescription").setValue(productDescription);
-        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productPrice").setValue(productPrice);
-        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(productName).child("productStock").setValue(productStock);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).push();
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).child("productImage").setValue(productImage);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).child("productName").setValue(productName);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).child("productStandardName").setValue(standardProductName);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).child("productDescription").setValue(productDescription);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).child("productPrice").setValue(productPrice);
+        constants.getDatabaseReference().child("Categories").child(mainCategoryName).child(mainSubcategoryName).child(standardProductName).child("productStock").setValue(productStock);
         restartApp(view.getContext());
 
     }
@@ -418,6 +427,7 @@ public class AdminAddProduct extends Fragment
         Intent intent = new Intent(context, RegisterActivity.class);
         getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
         startActivity(intent);
+        getActivity().finish();
     }
 
 }

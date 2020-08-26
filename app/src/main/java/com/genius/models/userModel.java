@@ -9,9 +9,8 @@ public class userModel
     private String adress ;
     private String userImage ;
     private String uId ;
-    private String language;
 
-    public userModel(String name, String email, String password, String mobile, String adress, String userImage, String uId, String language) {
+    public userModel(String name, String email, String password, String mobile, String adress, String userImage, String uId) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -19,7 +18,6 @@ public class userModel
         this.adress = adress;
         this.userImage = userImage;
         this.uId = uId;
-        this.language = language;
     }
 
     public userModel()
@@ -84,11 +82,4 @@ public class userModel
         this.uId = uId;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
 }

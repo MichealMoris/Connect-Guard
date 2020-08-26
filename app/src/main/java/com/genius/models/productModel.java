@@ -5,16 +5,18 @@ public class productModel
 
     private  String productImage ;
     private  String productName ;
+    private  String standardProductName;
     private  String productDescription ;
     private  String productPrice ;
-    private int productStock ;
+    private String productStock ;
     private boolean isSoldOut = false;
 
     public productModel() {
     }
 
-    public productModel(String productImage, String productName, String productDescription, String productPrice, int productStock) {
+    public productModel(String productImage, String standardProductName,String productName, String productDescription, String productPrice, String productStock) {
         this.productImage = productImage;
+        this.standardProductName = standardProductName;
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
@@ -27,6 +29,14 @@ public class productModel
 
     public void setProductImage(String productImage) {
         this.productImage = productImage;
+    }
+
+    public String getStandardProductName() {
+        return standardProductName;
+    }
+
+    public void setStandardProductName(String standardProductName) {
+        this.standardProductName = standardProductName;
     }
 
     public String getProductName() {
@@ -53,11 +63,11 @@ public class productModel
         this.productPrice = productPrice;
     }
 
-    public int getProductStock() {
+    public String getProductStock() {
         return productStock;
     }
 
-    public void setProductStock(int productStock) {
+    public void setProductStock(String productStock) {
         this.productStock = productStock;
     }
 

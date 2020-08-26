@@ -9,13 +9,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.genius.constants.constants;
-import com.genius.models.SubcategoryModel;
 import com.genius.models.productModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +37,10 @@ public class ProductsFragment extends Fragment {
         
         View view = inflater.inflate(R.layout.fragment_products, container, false);
 
+        productsRecyclerview = view.findViewById(R.id.product_recyclerview);
+        productsRecyclerview.setHasFixedSize(true);
+        productsRecyclerview.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
         addProductsToRecyclerview(view, getArguments().getString("MainCategoryName2"), getArguments().getString("MainSubCategoryName"));
 
         productsToolbar = view.findViewById(R.id.products_toolbar);
@@ -58,9 +61,9 @@ public class ProductsFragment extends Fragment {
     }
 
 
-    public void addProductsToRecyclerview(final View view, String mainCategory, final String mainModel){
+    public void addProductsToRecyclerview(final View view, final String mainCategory, final String mainModel){
 
-        Query query = constants.getDatabaseReference().child("Categories").child(mainCategory).child(mainModel);
+        Query query = constants.getDatabaseReference().child("Categories").child(mainCategory);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,32 +71,40 @@ public class ProductsFragment extends Fragment {
 
                 productList.clear();
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.child(mainModel).getChildren()){
 
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    productModel productModel = new productModel();
+                    productModel.setStandardProductName(dataSnapshot.child("productStandardName").getValue(String.class));
+                    productModel.setProductName(dataSnapshot.child("productName").getValue(String.class));
+                    productModel.setProductImage(dataSnapshot.child("productImage").getValue(String.class));
+                    productModel.setProductDescription(dataSnapshot.child("productDescription").getValue(String.class));
+                    productModel.setProductPrice(dataSnapshot.child("productPrice").getValue(String.class));
+                    productModel.setProductStock(dataSnapshot.child("productStock").getValue(String.class));
+                    productList.add(productModel);
 
-                        productList.clear();
-                        productModel productModel = new productModel();
-                        productModel.setProductName(dataSnapshot.child("productName").getValue().toString());
-                        productModel.setProductImage(dataSnapshot.child("productImage").getValue().toString());
-                        productModel.setProductDescription(dataSnapshot.child("productDescription").getValue().toString());
-                        productModel.setProductPrice(dataSnapshot.child("productPrice").getValue().toString());
-                        productModel.setProductStock(Integer.parseInt(dataSnapshot.child("productStock").getValue().toString()));
-                        if (Integer.parseInt(dataSnapshot.child("productStock").getValue().toString()) == 0){
+                    for (int i = 0; i < productList.size(); i++){
+
+                        if (productList.get(i).getProductName() == null){
+
+                            productList.remove(i);
+
+                        }
+
+                    }
+
+                    /*for (int i = 0; i < productList.size(); i++){
+
+                        if (Integer.parseInt(productList.get(i).getProductStock()) == 0){
 
                             productModel.setSoldOut(true);
 
                         }
-                        productList.add(productModel);
 
-                    }
+                    }*/
 
                 }
 
-                productsRecyclerview = view.findViewById(R.id.product_recyclerview);
-                productsRecyclerview.setHasFixedSize(true);
-                productsRecyclerview.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                productsRecyclerviewAdapter = new ProductsRecyclerviewAdapter(productList, mainModel);
+                productsRecyclerviewAdapter = new ProductsRecyclerviewAdapter(productList, mainCategory, mainModel);
                 productsRecyclerview.setAdapter(productsRecyclerviewAdapter);
 
             }
@@ -103,9 +114,6 @@ public class ProductsFragment extends Fragment {
 
             }
         });
-
-        productList.clear();
-
 
     }
 

@@ -22,8 +22,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ProductDetailsFragment"
             tools:ignore="Instantiatable" android:screenOrientation="portrait"></activity>
-        <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Splash" android:screenOrientation="portrait">
+        <activity android:name=".RegisterActivity" android:screenOrientation="portrait" android:configChanges="locale"/>
+        <activity android:name=".Splash" android:screenOrientation="portrait" android:configChanges="locale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" android:screenOrientation="portrait"/>
+            android:theme="@style/Base.Theme.AppCompat" android:screenOrientation="portrait" android:configChanges="locale"/>
     </application>
 
 </manifest>

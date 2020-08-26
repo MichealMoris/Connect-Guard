@@ -3,6 +3,8 @@ package com.genius.connectguard;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -30,6 +32,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 public class MainFragment extends Fragment {
 
     TabLayout tabLayout;
@@ -43,6 +47,8 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        final SharedPreferences preferences = getActivity().getSharedPreferences("appLanguage", Context.MODE_PRIVATE);
 
         ConnectivityManager connectivityManager = (ConnectivityManager) view.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -92,9 +98,47 @@ public class MainFragment extends Fragment {
                             tabLayout.getTabAt(2).setIcon(R.drawable.settings_icon);
                             tabLayout.getTabAt(3).setIcon(R.drawable.admin_icon);
 
-                        } else {
+                        }else {
+
+                            final int[] tabIcon = {R.drawable.home_icon, R.drawable.cart_icon, R.drawable.admin_icon, R.drawable.settings_icon};
+
+                            tabLayout = view.findViewById(R.id.home_tab);
+                            for (int i = 0; i < tabIcon.length; i++) {
+                                View view2 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
+                                TabLayout.Tab tab = tabLayout.getTabAt(i);
+                                view2.findViewById(R.id.tab_icon).setBackgroundResource(tabIcon[i]);
+                                if (tab != null) {
+                                    tab.setCustomView(view2);
+                                }
+                            }
+
+                            viewPager = view.findViewById(R.id.home_viewpager);
+                            homeViewPager = new HomeViewPager(getActivity().getSupportFragmentManager());
+
+                            homeViewPager.addFragment(new HomeFragment(), "Home");
+                            homeViewPager.addFragment(new CartFragment(), "Cart");
+                            homeViewPager.addFragment(new SettingsFragment(), "Settings");
+
+                            viewPager.setAdapter(homeViewPager);
+                            tabLayout.setupWithViewPager(viewPager);
+
+
+                            tabLayout.getTabAt(0).setIcon(R.drawable.home_icon);
+                            tabLayout.getTabAt(1).setIcon(R.drawable.cart_icon);
+                            tabLayout.getTabAt(2).setIcon(R.drawable.settings_icon);
+
+                            homeProgressBar.setVisibility(View.GONE);
+
+                            if (preferences.getString("langCode", "en").equals("ar")){
+
+                                viewPager.setRotationY(180f);
+
+                            }
+
 
                         }
+
+
 
                         if (snapshot.exists()) {
 
@@ -102,6 +146,12 @@ public class MainFragment extends Fragment {
 
                         }
 
+
+                        if (preferences.getString("langCode", "en").equals("ar")){
+
+                            viewPager.setRotationY(180f);
+
+                        }
 
                     }
 
@@ -143,9 +193,16 @@ public class MainFragment extends Fragment {
 
                 homeProgressBar.setVisibility(View.GONE);
 
+                if (preferences.getString("langCode", "en").equals("ar")){
+
+                    viewPager.setRotationY(180f);
+
+                }
+
             }
 
         }
+
 
         return view;
     }
@@ -160,5 +217,6 @@ public class MainFragment extends Fragment {
         fragmentTransaction.commit();
 
     }
+
 
 }

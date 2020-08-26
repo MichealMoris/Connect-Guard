@@ -11,10 +11,14 @@ public class CartModel {
     private int id;
     @ColumnInfo(name = "product_image")
     private String product_image;
+    @ColumnInfo(name = "product_standard_name")
+    private String product_standard_name;
     @ColumnInfo(name = "product_name")
     private String product_name;
     @ColumnInfo(name = "product_catgory")
     private String product_catgory;
+    @ColumnInfo(name = "product_subcatgory")
+    private String product_subcatgory;
     @ColumnInfo(name = "product_amount")
     private String product_amount;
     @ColumnInfo(name = "product_price")
@@ -24,10 +28,12 @@ public class CartModel {
     @ColumnInfo(name = "order_total")
     private int order_total;
 
-    public CartModel(String product_image, String product_name, String product_catgory, String product_amount, int product_price, int total, int order_total) {
+    public CartModel(String product_image, String product_standard_name, String product_name, String product_catgory, String product_subcatgory, String product_amount, int product_price, int total, int order_total) {
         this.product_image = product_image;
+        this.product_standard_name = product_standard_name;
         this.product_name = product_name;
         this.product_catgory = product_catgory;
+        this.product_subcatgory = product_subcatgory;
         this.product_amount = product_amount;
         this.product_price = product_price;
         this.total = total;
@@ -45,7 +51,13 @@ public class CartModel {
         this.id = id;
     }
 
+    public String getProduct_standard_name() {
+        return product_standard_name;
+    }
 
+    public void setProduct_standard_name(String product_standard_name) {
+        this.product_standard_name = product_standard_name;
+    }
 
     public String getProduct_image() {
         return product_image;
@@ -69,6 +81,14 @@ public class CartModel {
 
     public void setProduct_catgory(String product_catgory) {
         this.product_catgory = product_catgory;
+    }
+
+    public String getProduct_subcatgory() {
+        return product_subcatgory;
+    }
+
+    public void setProduct_subcatgory(String product_subcatgory) {
+        this.product_subcatgory = product_subcatgory;
     }
 
     public String getProduct_amount() {

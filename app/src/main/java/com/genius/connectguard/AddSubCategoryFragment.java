@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -41,7 +42,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddSubCategoryFragment extends Fragment {
 
-    ImageView close;
+    Toolbar addSubcategoryToolbar;
     ImageView pickNewModelImage;
     ImageView pickedModelImage;
     Spinner sItems;
@@ -59,16 +60,14 @@ public class AddSubCategoryFragment extends Fragment {
         pickedModelImage = view.findViewById(R.id.new_sub_category_image);
         addCategoriesToSpinner(view);
 
-        close = view.findViewById(R.id.close_admins);
-        close.setOnClickListener(new View.OnClickListener() {
+        addSubcategoryToolbar = view.findViewById(R.id.add_new_subcategory_toolbar);
+        addSubcategoryToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
                 fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
                 fragmentTransaction.commit();
-
             }
         });
 
@@ -90,7 +89,11 @@ public class AddSubCategoryFragment extends Fragment {
 
                 if (modelName.getText().toString().isEmpty()){
 
-                    Toast.makeText(view.getContext(), "Please Enter Subcategory Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Please Enter Subcategory Name Or Subcategory Image", Toast.LENGTH_SHORT).show();
+
+                }else if (selectedModelImage == null){
+
+                    Toast.makeText(view.getContext(), "Please Enter Subcategory Image", Toast.LENGTH_SHORT).show();
 
                 }else if (!modelName.getText().toString().isEmpty()){
 
@@ -210,6 +213,7 @@ public class AddSubCategoryFragment extends Fragment {
         Intent intent = new Intent(context, RegisterActivity.class);
         getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
         startActivity(intent);
+        getActivity().finish();
     }
 
 }

@@ -11,7 +11,7 @@
     <string name="address">العنوان</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="car_model">نوع السيارة</string>
-    <string name="language">اللغة</string>
+    <string name="language">اللغة:</string>
     <string name="sign_up">سجل الدجول</string>
     <string name="already_have_account">هل تمتلك حساب</string>
     <string name="sign_in">تسجيل الدخول</string>
@@ -22,7 +22,7 @@
     <string name="send_order">ارسل الطلب</string>
     <string name="price">مجموع الحساب:</string>
     <string name="sign_out">تسجيل خروج</string>
-    <string name="add_to_cart">اضف الي عربة التسوق</string>
+    <string name="add_to_cart">اضف الي السلة</string>
     <string name="done">تم</string>
     <string name="enter_your_email_to_forget_your_password">ادخل البريد الالكتروني لتغيير كلمة مرورك:</string>
     <string name="we_will_send_you_confirmation_email_to_forget_your_password">سوف نرسل لك بريد الكتروني لتغيير كلمة مرورك</string>
@@ -37,11 +37,11 @@
     <string name="et_product_price_hint">ادخل السعر</string>
     <string name="button_product_submit">تم</string>
     <string name="admin_panel">لوحة التحكم</string>
-    <string name="cart">عربة التسوق</string>
+    <string name="cart">السلة</string>
     <string name="checkout">ادفع</string>
     <string name="old_password">كلمة المرور القديمة</string>
     <string name="cancel">الغاء</string>
-    <string name="add_to_card">اضف الي عربة التسوق</string>
+    <string name="add_to_card">اضف الي السلة</string>
     =======
     <string name="userName">"محمد هاني "</string>
     <string name="carType">"لانسر بوما "</string>
@@ -52,7 +52,7 @@
     <string name="ProductName">"حامي شاشة السيارة من هواوي "</string>
     <string name="ProductPrice">100 L.E</string>
     <string name="or">أو</string>
-    <string name="item_added_to_cart">تمت اضافته الي عربة التسوق</string>
+    <string name="item_added_to_cart">تمت اضافته الي السلة</string>
     <string name="add">أضف</string>
     <string name="thank_you_for_ordering">شكراً لطلبك!</string>
     <string name="your_order_has_been_sent_and_we_will_contact_you_as_soon_as_possible">تم ارسال طلبك و سوف نراسلك بأقرب وقت ممكن</string>
@@ -75,8 +75,16 @@
     <string name="please_add_model">برجاء اضافة فئة فرعية</string>
     <string name="enter_product_stock">ادخل مخزون المنتج</string>
     <string name="sold_out">بيعت كلها</string>
-    <string name="item_add_to_cart">" تم أضافته الي عربة التسوق"</string>
+    <string name="item_add_to_cart">" تم أضافته الي السلة"</string>
     <string name="total">"مجموع الحساب: "</string>
-    <string name="this_item_already_in_the_cart">هذا المنتج مضاف بالفعل في عربة التسوق</string>
+    <string name="this_item_already_in_the_cart">هذا المنتج مضاف بالفعل في السلة</string>
+    <string name="no_more_stock">لا مزيد من المخزون</string>
+    <string name="order_price">السعر:</string>
+    <string name="amount">الكمية:</string>
+    <string name="order_number">رقم الطلب:</string>
+    <string name="order_model">نوع الطلب:</string>
+    <string name="delete_product">مسح منتج</string>
+    <string name="please_add_subcategory">برجاء انشاء فئة فرعية</string>
+    <string name="please_add_product">برجاء اضافة منتج</string>
     >>>>>>> origin/master
 </resources>

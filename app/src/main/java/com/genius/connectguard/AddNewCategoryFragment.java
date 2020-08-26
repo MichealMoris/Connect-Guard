@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -36,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddNewCategoryFragment extends Fragment {
 
-    private ImageView close;
+    private Toolbar addCategoryToolbar;
     private ImageView pickedCategoryImage;
     private ImageView pickCategoryImage;
     private EditText categoryName;
@@ -113,16 +114,14 @@ public class AddNewCategoryFragment extends Fragment {
             }
         });
 
-        close = view.findViewById(R.id.close_admins);
-        close.setOnClickListener(new View.OnClickListener() {
+        addCategoryToolbar = view.findViewById(R.id.add_new_category_toolbar);
+        addCategoryToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
                 fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
                 fragmentTransaction.commit();
-
             }
         });
 
@@ -164,6 +163,7 @@ public class AddNewCategoryFragment extends Fragment {
         Intent intent = new Intent(context, RegisterActivity.class);
         getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
         startActivity(intent);
+        getActivity().finish();
     }
 
 }

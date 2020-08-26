@@ -7,18 +7,23 @@
     android:orientation="vertical"
     tools:context=".RequestsFragment">
 
-    <ImageView
-        android:id="@+id/close_admins"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_gravity="start|top"
-        android:layout_margin="10dp"
-        android:src="@drawable/close" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/orders_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/back_icon"
+        app:subtitleTextColor="#FFF"
+        app:title="@string/orders"
+        app:titleTextColor="#FFF" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orders_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_requests"
-        />
+        tools:listitem="@layout/item_requests" />
 
 </LinearLayout>

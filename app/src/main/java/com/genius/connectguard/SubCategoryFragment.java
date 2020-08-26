@@ -9,10 +9,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.genius.constants.constants;
 import com.genius.models.CategoryModel;
@@ -28,15 +30,18 @@ import java.util.List;
 public class SubCategoryFragment extends Fragment {
 
     Toolbar SubcategoryToolbar;
-    List<SubcategoryModel> subcategoryModelList = new ArrayList<>();
     RecyclerView subcategoryRecyclerView;
     SubCategoryRecyclerViewAdapter subCategoryRecyclerViewAdapter;
+    List<SubcategoryModel> subcategoryModelList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sub_category, container, false);
 
+        subcategoryRecyclerView = view.findViewById(R.id.subcategory_recyclerview);
+        subcategoryRecyclerView.setHasFixedSize(true);
+        subcategoryRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         addSubcategoriesToRecyclerView(view,getArguments().getString("MainCategoryName"));
 
@@ -57,9 +62,9 @@ public class SubCategoryFragment extends Fragment {
         return view;
     }
 
-    public void addSubcategoriesToRecyclerView(final View view, final String mainCategoryName){
+    public void addSubcategoriesToRecyclerView(final View view, final String mainCategoryName) {
 
-        Query query = constants.getDatabaseReference().child("Categories").child(mainCategoryName);
+        Query query = constants.getDatabaseReference().child("Categories");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,24 +72,26 @@ public class SubCategoryFragment extends Fragment {
 
                 subcategoryModelList.clear();
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot categoriesSnapshot : snapshot.child(mainCategoryName).getChildren()) {
 
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    SubcategoryModel subcategoryModel = new SubcategoryModel();
+                    subcategoryModel.setSubcategoryName(categoriesSnapshot.child("modelName").getValue(String.class));
+                    subcategoryModel.setSubcategoryImage(categoriesSnapshot.child("modelImage").getValue(String.class));
+                    subcategoryModelList.add(subcategoryModel);
+                    for (int i = 0; i < subcategoryModelList.size(); i++){
 
-                        subcategoryModelList.clear();
-                        SubcategoryModel subcategoryModel = new SubcategoryModel();
-                        subcategoryModel.setSubcategoryName(dataSnapshot.child("modelName").getValue().toString());
-                        subcategoryModel.setSubcategoryImage(dataSnapshot.child("modelImage").getValue().toString());
-                        subcategoryModelList.add(subcategoryModel);
+                        if (subcategoryModelList.get(i).getSubcategoryName() == null){
+
+                            subcategoryModelList.remove(i);
+
+                        }
 
                     }
 
                 }
 
-                subcategoryRecyclerView = view.findViewById(R.id.subcategory_recyclerview);
-                subcategoryRecyclerView.setHasFixedSize(true);
-                subcategoryRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                subCategoryRecyclerViewAdapter = new SubCategoryRecyclerViewAdapter(getActivity(), mainCategoryName,subcategoryModelList);
+
+                subCategoryRecyclerViewAdapter = new SubCategoryRecyclerViewAdapter(getActivity(), mainCategoryName, subcategoryModelList);
                 subcategoryRecyclerView.setAdapter(subCategoryRecyclerViewAdapter);
 
             }
@@ -93,11 +100,10 @@ public class SubCategoryFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
+
         });
 
-        subcategoryModelList.clear();
-
-    }
 
     /*public void addCategoriesToRecyclerView(final String mainCategoryName){
 
@@ -149,4 +155,5 @@ public class SubCategoryFragment extends Fragment {
 
     }*/
 
+    }
 }

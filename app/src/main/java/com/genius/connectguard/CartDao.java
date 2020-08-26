@@ -44,7 +44,7 @@ public abstract class CartDao {
     }
 
 
-    @Query("DELETE FROM cartmodel WHERE id NOT IN (SELECT MIN(id) FROM CartModel GROUP BY product_name, product_catgory)")
+    @Query("DELETE FROM cartmodel WHERE id NOT IN (SELECT MIN(id) FROM CartModel GROUP BY product_name, product_subcatgory)")
     abstract void deleteDuplicates();
 
 }

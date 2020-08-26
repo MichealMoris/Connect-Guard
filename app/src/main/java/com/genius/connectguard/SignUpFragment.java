@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,9 +46,9 @@ public class SignUpFragment extends Fragment {
     private EditText adressField;
     private EditText carModel;
     private CircleImageView circleImageView;
-    private Spinner userRegisterChooseLang;
     private Uri userImage;
     private Button registerBtn;
+    private Toolbar sign_up_toolbar;
 
 
 
@@ -56,6 +57,16 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+
+        sign_up_toolbar = view.findViewById(R.id.sign_up_toolbar);
+        sign_up_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setFragment(new MainFragment());
+
+            }
+        });
 
         alreadyHaveAccount = view.findViewById(R.id.signInText);
         alreadyHaveAccount.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +105,6 @@ public class SignUpFragment extends Fragment {
         mobileField = view.findViewById(R.id.register_mobile_field);
         adressField = view.findViewById(R.id.register_adress_field);
         circleImageView = view.findViewById(R.id.user_picked_image);
-        userRegisterChooseLang = view.findViewById(R.id.userRegisterChooseLang);
         registerBtn = view.findViewById(R.id.register_register_btn);
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
@@ -114,10 +124,8 @@ public class SignUpFragment extends Fragment {
                 String password = passwordField.getText().toString();
                 String mobile = mobileField.getText().toString();
                 String adress = adressField.getText().toString();
-                String model = carModel.getText().toString();
-                String language = userRegisterChooseLang.getSelectedItem().toString();
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || mobile.isEmpty() || adress.isEmpty() || model.isEmpty() || language.isEmpty()) {
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || mobile.isEmpty() || adress.isEmpty()) {
 
                     constants.showToast(requireContext(), "invalid data");
 
@@ -133,7 +141,7 @@ public class SignUpFragment extends Fragment {
 
                 constants.showProgress();
 
-                registerFireBase(name, email, password, mobile, adress , model, language);
+                registerFireBase(name, email, password, mobile, adress);
 
              /*   setFragment(new SignInFragment());
                 constants.dissmisProgress();*/
@@ -144,7 +152,7 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    private void registerFireBase(final String name , final String email , final String password, final String mobile, final String adress , final String model, final String language) {
+    private void registerFireBase(final String name , final String email , final String password, final String mobile, final String adress) {
         constants.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -154,7 +162,7 @@ public class SignUpFragment extends Fragment {
                         {
                             String uId = task.getResult().getUser().getUid();
 
-                            uploadImage(name,email, password,mobile,adress,model , uId, language);
+                            uploadImage(name,email, password,mobile,adress, uId);
 
 
                         } else
@@ -167,7 +175,7 @@ public class SignUpFragment extends Fragment {
                 });
     }
 
-    private void uploadImage(final String name, final String email,final String password , final String mobile, final String adress,final String model,  final String uId, final String language)
+    private void uploadImage(final String name, final String email,final String password , final String mobile, final String adress,  final String uId)
     {
         // set file place into storage and file name
         final StorageReference userImageRef = constants.getStorageReference().child("users_images/"+userImage.getLastPathSegment());
@@ -192,15 +200,15 @@ public class SignUpFragment extends Fragment {
                     Uri downloadUri = task.getResult();
                     String imageUrl = downloadUri.toString();
 
-                    saveNewUser(name,email,password,mobile,adress,uId,imageUrl, language);
+                    saveNewUser(name,email,password,mobile,adress,uId,imageUrl);
                 }
             }
         });
     }
 
-    private void saveNewUser(String name, String email, String password , String mobile, String adress, String uId, String imageUrl, String language)
+    private void saveNewUser(String name, String email, String password , String mobile, String adress, String uId, String imageUrl)
     {
-        userModel userModel = new userModel(name , email , password , mobile , adress , imageUrl , uId, language);
+        userModel userModel = new userModel(name , email , password , mobile , adress , imageUrl , uId);
 
         constants.getDatabaseReference().child("Users").child(uId).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
