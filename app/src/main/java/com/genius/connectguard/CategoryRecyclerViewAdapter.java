@@ -26,6 +26,7 @@ import java.util.List;
 
 public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder> {
 
+    SubCategoryFragment secondFragmentName;
     List<CategoryModel> categoryModels = new ArrayList<>();
     FragmentActivity fragmentActivity;
 
@@ -61,13 +62,20 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
                             if (snapshot.child(dataSnapshot.getKey()).child("CategoryName").getValue().toString().equals(categoryModels.get(position).getCategoryName())){
 
-                                SubCategoryFragment secondFragmentName = new SubCategoryFragment();
+                                secondFragmentName = new SubCategoryFragment();
                                 Bundle args = new Bundle();
                                 args.putString("MainCategoryName", snapshot.child(dataSnapshot.getKey()).child("CategoryName").getValue().toString());
                                 secondFragmentName.setArguments(args);
-                                fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.register_framelayout, secondFragmentName).commit();
 
                             }
+
+                        }
+
+                        try {
+
+                            fragmentActivity.getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.register_framelayout, secondFragmentName).commit();
+
+                        }catch (Exception e){
 
 
                         }

@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class SettingsFragment extends Fragment {
     private ImageView profile_image_in_settings;
     private TextView profile_name_in_settings;
     private TextView profile_email_in_settings;
+    private TextView myOrdersTextView;
     private LinearLayout cover_in_settings;
     private TextView sign_in_text_in_settings;
     private Button logOutBtn ;
@@ -59,6 +61,25 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
+                    fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
+                    fragmentTransaction.commit();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         final SharedPreferences preferences = getActivity().getSharedPreferences("appLanguage", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = preferences.edit();
@@ -125,7 +146,17 @@ public class SettingsFragment extends Fragment {
         accountSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragemnt(new AccountSettingFragment(), R.id.settings_framlayout);
+                setFragemnt(new AccountSettingFragment(), R.id.register_framelayout);
+            }
+        });
+
+        myOrdersTextView = view.findViewById(R.id.tv_my_orders);
+        myOrdersTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setFragemnt(new MyOrdersFragment(), R.id.register_framelayout);
+
             }
         });
 
@@ -156,7 +187,7 @@ public class SettingsFragment extends Fragment {
 
     private void setFragemnt(Fragment fragment, int repTo) {
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
         fragmentTransaction.replace(repTo, fragment);
         fragmentTransaction.commit();

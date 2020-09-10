@@ -23,11 +23,13 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +37,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.genius.constants.constants;
 import com.genius.models.CartModel;
 import com.genius.models.CategoryModel;
+import com.genius.models.SubcategoryModel;
 import com.genius.models.productModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -44,6 +48,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,11 +56,12 @@ public class HomeFragment extends Fragment {
 
     private View view ;
     private View view2 ;
-    private RecyclerView recyclerView ;
+    private RecyclerView recyclerView, subcategoryRecyclerview;
     private SearchView searchView ;
-    private List<productModel> postModels;
+    private List<SubcategoryModel> subcategoryModelList = new ArrayList<>();
     private List<CategoryModel> categoryModels = new ArrayList<>();
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
+    private SubCategoryRecyclerViewAdapter subCategoryRecyclerViewAdapter;
     String key;
     /*postsAdbtar adapter;*/
 
@@ -77,8 +83,52 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        subcategoryRecyclerview = view.findViewById(R.id.subcategory_recyclerview_in_home);
+        subcategoryRecyclerview.setHasFixedSize(true);
+        subcategoryRecyclerview.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         addCategoriesToRecyclerView();
+        addSubcategoriesToRecyclerView("");
+
+        searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+
+                    recyclerView.setVisibility(View.GONE);
+
+                }else {
+
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                subCategoryRecyclerViewAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                try {
+                    if (subCategoryRecyclerViewAdapter.getFilter() != null){
+
+                        subCategoryRecyclerViewAdapter.getFilter().filter(newText);
+
+                    }
+                }catch (Exception e){
+
+
+
+                }
+                return false;
+            }
+
+        });
 
         return view;
     }
@@ -87,8 +137,6 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        /*initViews();
-        getPosts();*/
 
     }
 
@@ -112,6 +160,12 @@ public class HomeFragment extends Fragment {
 
                 }
 
+                for (int i = 0; i < categoryModels.size(); i++){
+
+
+
+                }
+
                 categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(getActivity(),categoryModels);
                 recyclerView.setAdapter(categoryRecyclerViewAdapter);
 
@@ -121,6 +175,54 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+
+    }
+
+    public void addSubcategoriesToRecyclerView(final String mainCategoryName) {
+
+        Query query = constants.getDatabaseReference().child("Categories");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                subcategoryModelList.clear();
+
+                for (DataSnapshot categoriesSnapshot : snapshot.getChildren()) {
+
+                    for (DataSnapshot snapshot1 : categoriesSnapshot.getChildren()){
+
+                        SubcategoryModel subcategoryModel = new SubcategoryModel();
+                        subcategoryModel.setSubcategoryName(snapshot1.child("modelName").getValue(String.class));
+                        subcategoryModel.setSubcategoryImage(snapshot1.child("modelImage").getValue(String.class));
+                        subcategoryModel.setMainCategoryName(snapshot1.child("modelCategory").getValue(String.class));
+                        subcategoryModelList.add(subcategoryModel);
+                        for (int i = 0; i < subcategoryModelList.size(); i++){
+
+                            if (subcategoryModelList.get(i).getSubcategoryName() == null){
+
+                                subcategoryModelList.remove(i);
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                subCategoryRecyclerViewAdapter = new SubCategoryRecyclerViewAdapter(getActivity(), mainCategoryName, subcategoryModelList);
+                subcategoryRecyclerview.setAdapter(subCategoryRecyclerViewAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
         });
 
     }

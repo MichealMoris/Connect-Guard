@@ -11,8 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ScrollingView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +79,7 @@ public class EditProductFragment extends Fragment {
                              final Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_edit_product, container, false);
+
 
         final SharedPreferences data = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = data.edit();
@@ -158,10 +162,11 @@ public class EditProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-                fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
-                fragmentTransaction.commit();
+                FragmentManager fm = getFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    Log.i("MainActivity", "popping backstack");
+                    fm.popBackStack();
+                }
 
             }
         });

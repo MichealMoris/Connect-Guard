@@ -63,7 +63,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/category_item" />
+            tools:listitem="@layout/category_item"
+            tools:visibility="visible">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/subcategory_recyclerview_in_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/subcategory_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
 

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
@@ -101,10 +104,11 @@ public class AdminAddProduct extends Fragment
             @Override
             public void onClick(View v) {
 
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-                fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
-                fragmentTransaction.commit();
+                FragmentManager fm = getFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    Log.i("MainActivity", "popping backstack");
+                    fm.popBackStack();
+                }
 
             }
         });
@@ -125,7 +129,7 @@ public class AdminAddProduct extends Fragment
                     AddProductProgress.setVisibility(View.VISIBLE);
                     if (selectedProductImage != null){
 
-                        final StorageReference storageReference = constants.getStorageReference().child("product_images/" + product_name.getText().toString());
+                        final StorageReference storageReference = constants.getStorageReference().child("product_images/" + selectedProductImage.getLastPathSegment());
                         UploadTask uploadTask = storageReference.putFile(selectedProductImage);
                         uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
                         {

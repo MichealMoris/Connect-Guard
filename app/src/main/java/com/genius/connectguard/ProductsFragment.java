@@ -5,11 +5,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class ProductsFragment extends Fragment {
         
         View view = inflater.inflate(R.layout.fragment_products, container, false);
 
+
         productsRecyclerview = view.findViewById(R.id.product_recyclerview);
         productsRecyclerview.setHasFixedSize(true);
         productsRecyclerview.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -49,10 +52,11 @@ public class ProductsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-                fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
-                fragmentTransaction.commit();
+                FragmentManager fm = getFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    Log.i("MainActivity", "popping backstack");
+                    fm.popBackStack();
+                }
 
             }
         });

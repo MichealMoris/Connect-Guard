@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "694064457525",
-    "firebase_url": "https://connectgruad2.firebaseio.com",
-    "project_id": "connectgruad2",
-    "storage_bucket": "connectgruad2.appspot.com"
+    "project_number": "1065575846360",
+    "firebase_url": "https://fixed-5c12e.firebaseio.com",
+    "project_id": "fixed-5c12e",
+    "storage_bucket": "fixed-5c12e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:694064457525:android:237b326ffdcb60fdd40e7c",
+        "mobilesdk_app_id": "1:1065575846360:android:d83643a941c6c9043022ad",
         "android_client_info": {
           "package_name": "com.genius.connectguard"
         }
       },
       "oauth_client": [
         {
-          "client_id": "694064457525-4k0kspo2a7cl6j44d6807sq56ksqgri5.apps.googleusercontent.com",
+          "client_id": "1065575846360-jetffqg4kuqmafu5kkmpi0kp5i738lj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.genius.connectguard",
+            "certificate_hash": "f7b9b9bd5b2c44475f87a98a614e01c36fc28134"
+          }
+        },
+        {
+          "client_id": "1065575846360-u7k6djo7v05lk6op1rqehfngpguadji3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAh9AMyxEjbJ1B2sZeAj3hHBd3SUYzuH_0"
+          "current_key": "AIzaSyBDGB8jMB03Y_EY8yyJiID13v43SA_PHgs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "694064457525-4k0kspo2a7cl6j44d6807sq56ksqgri5.apps.googleusercontent.com",
+              "client_id": "1065575846360-u7k6djo7v05lk6op1rqehfngpguadji3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

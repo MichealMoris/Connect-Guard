@@ -36,7 +36,7 @@ public class EmailSentFragment extends Fragment {
 
     private void setFragemnt(Fragment fragment) {
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
         fragmentTransaction.replace(R.id.email_sent_fragment_framelayout, fragment);
         fragmentTransaction.commit();

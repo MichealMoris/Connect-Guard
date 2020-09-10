@@ -13,8 +13,9 @@ public class OrderModel {
     String orderProductAmount;
     String orderProductPrice;
     String orderProductTotalPrice;
+    String orderProductStep;
 
-    public OrderModel(String orderUserImage, String orderUserName, String orderUserEmail, String orderUserAddress, String orderUserPhoneNumber, String orderProductNumber, String orderProductName, String orderProductModel, String orderProductAmount, String orderProductPrice, String orderProductTotalPrice) {
+    public OrderModel(String orderUserImage, String orderUserName, String orderUserEmail, String orderUserAddress, String orderUserPhoneNumber, String orderProductNumber, String orderProductName, String orderProductModel, String orderProductAmount, String orderProductPrice, String orderProductTotalPrice, String orderProductStep) {
         this.orderUserImage = orderUserImage;
         this.orderUserName = orderUserName;
         this.orderUserEmail = orderUserEmail;
@@ -26,6 +27,7 @@ public class OrderModel {
         this.orderProductAmount = orderProductAmount;
         this.orderProductPrice = orderProductPrice;
         this.orderProductTotalPrice = orderProductTotalPrice;
+        this.orderProductStep = orderProductStep;
     }
 
     public OrderModel() {
@@ -117,5 +119,13 @@ public class OrderModel {
 
     public void setOrderProductModel(String orderProductModel) {
         this.orderProductModel = orderProductModel;
+    }
+
+    public String getOrderProductStep() {
+        return orderProductStep;
+    }
+
+    public void setOrderProductStep(String orderProductStep) {
+        this.orderProductStep = orderProductStep;
     }
 }

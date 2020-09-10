@@ -67,7 +67,7 @@ public class MainFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull final DataSnapshot snapshot) {
 
-                        if (snapshot.child("email").getValue().toString().equals("mesho.moris@gmail.com")) {
+                        if (snapshot.child("email").getValue().toString().equals("mina.melad150@gmail.com")) {
 
                             final int[] tabIcon = {R.drawable.home_icon, R.drawable.cart_icon, R.drawable.admin_icon, R.drawable.settings_icon};
 
@@ -211,7 +211,7 @@ public class MainFragment extends Fragment {
 
     private void setFragemnt(Fragment fragment) {
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
         fragmentTransaction.replace(R.id.register_framelayout, fragment);
         fragmentTransaction.commit();

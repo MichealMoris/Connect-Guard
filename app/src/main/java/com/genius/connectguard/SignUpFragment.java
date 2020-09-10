@@ -8,9 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +66,11 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                setFragment(new MainFragment());
+                FragmentManager fm = getFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    Log.i("MainActivity", "popping backstack");
+                    fm.popBackStack();
+                }
 
             }
         });
@@ -82,7 +89,7 @@ public class SignUpFragment extends Fragment {
 
     private void setFragment(Fragment fragment) {
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
         fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
         fragmentTransaction.replace(R.id.register_framelayout, fragment);
         fragmentTransaction.commit();

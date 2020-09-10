@@ -86,7 +86,7 @@
     <string name="try_again">Try Again</string>
     <string name="we_re_please_connect_to_internet_and_try_again">We\'re Sorry Please Connect To Internet And Try Again</string>
     <string name="please_add_category">Please Add Category</string>
-    <string name="please_add_model" >Please Add Subcategory</string>
+    <string name="please_add_model">Please Add Subcategory</string>
     <string name="enter_product_stock">Enter Product Stock</string>
     <string name="sold_out">Sold Out</string>
     <string name="item_add_to_cart">" Added To Cart"</string>
@@ -103,4 +103,13 @@
     <string name="to_change_app_language_please_change_your_phone_language_or_update_your_android_version">To Change App Language Please Change Your Phone Language Or Update Your Android Version</string>
     <string name="please_enter_full_data">Please Enter Full Data</string>
     <string name="reset_password">Reset Password</string>
+    <string name="delete_category">Delete Category</string>
+    <string name="delete_subcategory">Delete Subcategory</string>
+    <string name="next">Next</string>
+    <string name="new_orders">New Orders</string>
+    <string name="in_progress_orders">In Progress Orders</string>
+    <string name="shipped">Shipped</string>
+    <string name="delivered">Delivered</string>
+    <string name="shipped_order">Shipped Order</string>
+    <string name="my_orders">My Orders</string>
 </resources>

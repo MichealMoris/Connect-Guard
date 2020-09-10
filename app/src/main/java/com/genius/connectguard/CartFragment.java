@@ -1,20 +1,37 @@
 package com.genius.connectguard;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.NetworkRequest;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +41,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.genius.connectguard.SendNotificationPack.APIService;
+import com.genius.connectguard.SendNotificationPack.Client;
+import com.genius.connectguard.SendNotificationPack.Data;
+import com.genius.connectguard.SendNotificationPack.MyResponse;
+import com.genius.connectguard.SendNotificationPack.NotificationSender;
+import com.genius.connectguard.SendNotificationPack.Token;
 import com.genius.constants.constants;
 import com.genius.models.CartModel;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartFragment extends Fragment {
 
@@ -49,12 +82,32 @@ public class CartFragment extends Fragment {
     private ElegantNumberButton elegantNumberButton;
     private TextView total;
     private Button checkOut;
+    private APIService apiService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
+                    fragmentTransaction.replace(R.id.register_framelayout, new MainFragment());
+                    fragmentTransaction.commit();
+                    return true;
+                }
+                return false;
+            }
+        } );
 
         SharedPreferences preferences = getActivity().getSharedPreferences("appLanguage", Context.MODE_PRIVATE);
 
@@ -75,6 +128,23 @@ public class CartFragment extends Fragment {
 
                         if (!constants.getUId(getActivity()).equals("empty")){
 
+
+                            apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+                            String UserTB = "qvp6t42nXvadCmafyt5v7iXTJKO2";
+
+                            FirebaseDatabase.getInstance().getReference().child("Tokens").child(UserTB.trim()).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String usertoken=dataSnapshot.getValue(String.class);
+                                    sendNotifications(usertoken, "New Order!", "We Have Received A New Order Check Your Orders");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
                             new CheckOutTask().execute();
 
                         }else if (CartDatabaseInstance.getInstance(getActivity().getApplicationContext()).getAppDatabase().cartDao().getAllCartOrders().size() != 0){
@@ -92,6 +162,8 @@ public class CartFragment extends Fragment {
         setRecyclerView(view);
         new TotalCounterTask().execute();
 
+        UpdateToken();
+
         return view;
     }
 
@@ -99,8 +171,8 @@ public class CartFragment extends Fragment {
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
+                .addToBackStack(null)
                 .add(R.id.register_framelayout,mainFragment)
-                .disallowAddToBackStack()
                 .commit();
 
     }
@@ -327,6 +399,7 @@ public class CartFragment extends Fragment {
                         constants.getDatabaseReference().child("Orders").child(orderNum).child("order_product_model").setValue(cartModelList.get(i).getProduct_subcatgory());
                         constants.getDatabaseReference().child("Orders").child(orderNum).child("order_total_price").setValue(cartModelList.get(i).getOrder_total());
                         constants.getDatabaseReference().child("Orders").child(orderNum).child("order_price").setValue(cartModelList.get(i).getProduct_price());
+                        constants.getDatabaseReference().child("Orders").child(orderNum).child("order_step").setValue("new order");
 
                         final int finalI = i;
 
@@ -354,21 +427,7 @@ public class CartFragment extends Fragment {
                 }
             });
 
-
-            if (cartModelList.size() != 0){
-
-                DoneOrderingDialog doneOrderingDialog = new DoneOrderingDialog();
-                doneOrderingDialog.show(getFragmentManager(), "doneOrderingDialog");
-
-            }
-
             CartDatabaseInstance.getInstance(getActivity().getApplicationContext()).getAppDatabase().cartDao().deleteAll();
-
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             return null;
         }
@@ -376,6 +435,40 @@ public class CartFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            Bitmap icon = BitmapFactory.decodeResource(getContext().getResources(),
+                    R.drawable.done_ordering_icon);
+
+            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            String NOTIFICATION_CHANNEL_ID = "NewOrder";
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+                @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Order Notification", NotificationManager.IMPORTANCE_MAX);
+
+                notificationChannel.setDescription("New Order Received!");
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.BLUE);
+                notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                notificationChannel.enableVibration(true);
+
+                notificationManager.createNotificationChannel(notificationChannel);
+
+            }
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID);
+
+            builder.setAutoCancel(true)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setLargeIcon(icon)
+                    .setSmallIcon(R.drawable.done_ordering_icon)
+                    .setTicker("Fixed")
+                    .setContentTitle("Thank You For Ordering!")
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Your Order Has Been Sent And We Will Contact You As Soon As Possible"))
+                    .setContentText("Your Order Has Been Sent And We Will Contact You As Soon As Possible")
+                    .setContentInfo("sent");
+
+            notificationManager.notify(1, builder.build());
 
             Intent intent = new Intent(getContext(), RegisterActivity.class);
             getActivity().overridePendingTransition(R.anim.fade_out_anim, R.anim.fade_in_anim);
@@ -386,5 +479,35 @@ public class CartFragment extends Fragment {
 
     }
 
+    private void UpdateToken(){
+        FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null){
+
+            String refreshToken= FirebaseInstanceId.getInstance().getToken();
+            Token token= new Token(refreshToken);
+            FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+
+        }
+    }
+
+    public void sendNotifications(String usertoken, String title, String message) {
+        Data data = new Data(title, message);
+        NotificationSender sender = new NotificationSender(data, usertoken);
+        apiService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body().success != 1) {
+                        Toast.makeText(getContext(), "Failed ", Toast.LENGTH_LONG);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

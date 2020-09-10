@@ -12,9 +12,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +59,7 @@ public class AccountSettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_account_setting, container, false);
+
 
         name_in_account_setting = view.findViewById(R.id.change_user_name);
         address_in_account_setting = view.findViewById(R.id.change_user_address);
@@ -103,7 +107,11 @@ public class AccountSettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                setFragemnt(new MainFragment());
+                FragmentManager fm = getFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    Log.i("MainActivity", "popping backstack");
+                    fm.popBackStack();
+                }
 
             }
         });
@@ -132,15 +140,6 @@ public class AccountSettingFragment extends Fragment {
         return view;
     }
 
-
-    private void setFragemnt(Fragment fragment) {
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fade_in_anim, R.anim.fade_out_anim);
-        fragmentTransaction.replace(R.id.register_framelayout, fragment);
-        fragmentTransaction.commit();
-
-    }
 
     private void changeData(final View view, final String image, final String name, final String address, final String mobile, final String spare_user_image){
 
